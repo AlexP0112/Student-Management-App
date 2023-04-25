@@ -4,13 +4,13 @@
 			"path": "project"
 		},
 		{
+			"path": "mock-front-end"
+		},
+		{
 			"path": "back-end"
 		},
 		{
-			"path": "admin-service"
-		},
-		{
-			"path": "mock-front-end"
+			"path": "school-service"
 		}
 	],
 	"settings": {}

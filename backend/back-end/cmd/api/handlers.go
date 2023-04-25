@@ -6,47 +6,38 @@ import (
 	"net/rpc"
 )
 
-type RequestPayload struct {
-	Action       string       `json:"action"`
-	AdminPayload adminPayload `json:"adminPayload,omitempty"`
-}
+func handleSubmission(w http.ResponseWriter, r *http.Request) {
+	var requestPayload requestPayload
 
-type adminPayload struct {
-	University string `json:"university"`
-	Faculty    string `json:"faculty"`
-	Department string `json:"department"`
-}
-
-func (app *Config) handleSubmission(w http.ResponseWriter, r *http.Request) {
-	var requestPayload RequestPayload
-
-	err := app.readJSON(w, r, &requestPayload)
+	err := readJSON(w, r, &requestPayload)
 	if err != nil {
-		app.errorJSON(w, err)
+		errorJSON(w, err)
 		return
 	}
 
 	switch requestPayload.Action {
-	case "admin":
-		app.sendToAdmin(w, requestPayload.AdminPayload)
+	case "addSchool":
+		addSchool(w, requestPayload.SchoolEntry)
+	case "getSchoolByName":
+		getSchoolByName(w, requestPayload.SchoolEntry.Name)
 	default:
-		app.errorJSON(w, errors.New("unknown action"))
+		errorJSON(w, errors.New("unknown action"))
 	}
 }
 
-func (app *Config) sendToAdmin(w http.ResponseWriter, a adminPayload) {
-	client, err := rpc.Dial("tcp", "admin-service:5001")
+func addSchool(w http.ResponseWriter, s schoolEntry) {
+	client, err := rpc.Dial("tcp", "school-service:5001")
 	if err != nil {
-		app.errorJSON(w, err)
+		errorJSON(w, err)
 		return
 	}
 
 	var reply string
 
-	err = client.Call("RPCServer.LogInfo", a, &reply)
+	err = client.Call("RPCServer.AddSchool", s, &reply)
 
 	if err != nil {
-		app.errorJSON(w, err)
+		errorJSON(w, err)
 		return
 	}
 
@@ -55,5 +46,30 @@ func (app *Config) sendToAdmin(w http.ResponseWriter, a adminPayload) {
 		Message: reply,
 	}
 
-	app.writeJSON(w, http.StatusOK, payload)
+	writeJSON(w, http.StatusOK, payload)
+}
+
+func getSchoolByName(w http.ResponseWriter, name string) {
+	client, err := rpc.Dial("tcp", "school-service:5001")
+	if err != nil {
+		errorJSON(w, err)
+		return
+	}
+
+	var reply schoolEntry
+
+	err = client.Call("RPCServer.GetSchoolByName", name, &reply)
+
+	if err != nil {
+		errorJSON(w, err)
+		return
+	}
+
+	payload := jsonResponse{
+		Error:   false,
+		Message: "success",
+		Data:    reply,
+	}
+
+	writeJSON(w, http.StatusOK, payload)
 }
