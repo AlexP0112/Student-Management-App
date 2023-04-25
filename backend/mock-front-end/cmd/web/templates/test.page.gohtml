@@ -6,7 +6,7 @@
             <div class="col">
                 <h1 class="mt-5">Test microservices</h1>
                 <hr>
-                <a id="adminBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Admin</a>
+                <a id="schoolBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test School</a>
 
                 <div id="output" class="mt-5" style="outline: 1px solid silver; padding: 2em;">
                     <span class="text-muted">Output shows here...</span>
@@ -32,17 +32,58 @@
 
 {{define "js"}}
     <script>
-    let adminBtn = document.getElementById("adminBtn");
+    let schoolBtn = document.getElementById("schoolBtn");
 	let sent = document.getElementById("payload");
 
-    adminBtn.addEventListener("click", function() {
+    schoolBtn.addEventListener("click", function() {
 
         const payload = {
-            action: "admin",
-			adminPayload: {
-				university: "University Politehnica of Bucharest",
-				faculty: "Faculty of Automatic Control and Computer Science",
-				department: "Department of Computer Science",
+            action: "addSchool",
+			schoolEntry: {
+				name: "Faculty of Automatic Control and Computer Science",
+				departments: [
+					{
+						name: "Department of Computer Science",
+						teachers: ["Florica", "Flop", "Dan Tudose"],
+						yearsOfStudy: [
+							{
+								type: "Bachelor",
+								year: 1,
+								numberOfSeries: 2,
+								numberOfGroups: 3,
+								subjects: ["Mate", "Romana", "Informatica"]
+							},
+							{
+								type: "Master",
+								year: 2,
+								numberOfSeries: 1,
+								numberOfGroups: 4,
+								subjects: ["Geografie", "Istorie"]
+							}
+						]
+					},
+					{
+						name: "Department of IS",
+						teachers: ["DDS", "FlopSD", "AAA AAA"],
+						yearsOfStudy: [
+							{
+								type: "Bachelor",
+								year: 2,
+								numberOfSeries: 5,
+								numberOfGroups: 9,
+								subjects: ["Mate", "Romana", "Informatica"]
+							},
+							{
+								type: "Master",
+								year: 1,
+								numberOfSeries: 1,
+								numberOfGroups: 4,
+								subjects: ["Filosofie", "Istorie"]
+							}
+						]
+					}
+
+				]
 			}
         }
 

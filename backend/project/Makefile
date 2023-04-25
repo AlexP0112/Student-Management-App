@@ -1,7 +1,7 @@
 SHELL=cmd.exe
 FRONT_END_BINARY=frontendApp.exe
 BACK_END_BINARY=backendApp
-ADMIN_BINARY=adminServiceApp
+SCHOOL_BINARY=schoolServiceApp
 
 ## up: starts all containers in the background without forcing build
 up:
@@ -10,7 +10,7 @@ up:
 	@echo Docker images started!
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build: build_back_end build_admin_service 
+up_build: build_back_end build_school_service 
 	@echo Stopping docker images (if running...)
 	docker-compose down
 	@echo Building (when required) and starting docker images...
@@ -29,10 +29,10 @@ build_back_end:
 	chdir ..\back-end && set GOOS=linux&& set GOARCH=amd64&& set CGO_ENABLED=0 && go build -o ${BACK_END_BINARY} ./cmd/api
 	@echo Done!
 
-## build_admin_service: builds the admin service binary as a linux executable
-build_admin_service:
-	@echo Building admin service binary...
-	chdir ..\admin-service && set GOOS=linux&& set GOARCH=amd64&& set CGO_ENABLED=0 && go build -o ${ADMIN_BINARY} ./cmd/api
+## build_school_service: builds the school service binary as a linux executable
+build_school_service:
+	@echo Building school service binary...
+	chdir ..\school-service && set GOOS=linux&& set GOARCH=amd64&& set CGO_ENABLED=0 && go build -o ${SCHOOL_BINARY} ./cmd/api
 	@echo Done!	
 
 ## build_front: builds the front end binary
