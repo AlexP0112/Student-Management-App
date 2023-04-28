@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+
+	"manouser.com/shared"
 )
 
 type JSONPayload struct {
@@ -11,10 +13,10 @@ type JSONPayload struct {
 
 func WriteLog(w http.ResponseWriter, r *http.Request) {
 
-	resp := jsonResponse{
+	resp := shared.JsonResponse{
 		Error:   false,
 		Message: "Random stuff",
 	}
 
-	writeJSON(w, http.StatusAccepted, resp)
+	shared.WriteJSON(w, http.StatusAccepted, resp)
 }

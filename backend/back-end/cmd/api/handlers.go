@@ -4,14 +4,16 @@ import (
 	"errors"
 	"net/http"
 	"net/rpc"
+
+	"manouser.com/shared"
 )
 
 func handleSubmission(w http.ResponseWriter, r *http.Request) {
 	var requestPayload requestPayload
 
-	err := readJSON(w, r, &requestPayload)
+	err := shared.ReadJSON(w, r, &requestPayload)
 	if err != nil {
-		errorJSON(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
@@ -21,14 +23,14 @@ func handleSubmission(w http.ResponseWriter, r *http.Request) {
 	case "getSchoolByName":
 		getSchoolByName(w, requestPayload.SchoolEntry.Name)
 	default:
-		errorJSON(w, errors.New("unknown action"))
+		shared.ErrorJSON(w, errors.New("unknown action"))
 	}
 }
 
 func addSchool(w http.ResponseWriter, s schoolEntry) {
 	client, err := rpc.Dial("tcp", "school-service:5001")
 	if err != nil {
-		errorJSON(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
@@ -37,22 +39,22 @@ func addSchool(w http.ResponseWriter, s schoolEntry) {
 	err = client.Call("RPCServer.AddSchool", s, &reply)
 
 	if err != nil {
-		errorJSON(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	payload := jsonResponse{
+	payload := shared.JsonResponse{
 		Error:   false,
 		Message: reply,
 	}
 
-	writeJSON(w, http.StatusOK, payload)
+	shared.WriteJSON(w, http.StatusOK, payload)
 }
 
 func getSchoolByName(w http.ResponseWriter, name string) {
 	client, err := rpc.Dial("tcp", "school-service:5001")
 	if err != nil {
-		errorJSON(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
@@ -61,15 +63,15 @@ func getSchoolByName(w http.ResponseWriter, name string) {
 	err = client.Call("RPCServer.GetSchoolByName", name, &reply)
 
 	if err != nil {
-		errorJSON(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	payload := jsonResponse{
+	payload := shared.JsonResponse{
 		Error:   false,
 		Message: "success",
 		Data:    reply,
 	}
 
-	writeJSON(w, http.StatusOK, payload)
+	shared.WriteJSON(w, http.StatusOK, payload)
 }

@@ -51,3 +51,11 @@ stop_frontend:
 	@echo Stopping front end...
 	@taskkill /IM "${FRONT_END_BINARY}" /F
 	@echo "Stopped front end!"
+
+## clean
+clean:
+	@echo Cleaning up...
+	chdir ..\back-end && del ${BACK_END_BINARY}
+	chdir ..\school-service && del ${SCHOOL_BINARY}
+	chdir ..\mock-front-end && del ${FRONT_END_BINARY}
+	@echo Done!
