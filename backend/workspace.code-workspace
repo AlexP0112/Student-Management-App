@@ -1,15 +1,23 @@
 {
 	"folders": [
 		{
-			"path": "project"
-		},
-		{
+			"name": "mock-front-end",
 			"path": "mock-front-end"
 		},
 		{
+			"name": "project",
+			"path": "project"
+		},
+		{
+			"name": "shared",
+			"path": "shared"
+		},
+		{
+			"name": "back-end",
 			"path": "back-end"
 		},
 		{
+			"name": "school-service",
 			"path": "school-service"
 		}
 	],
