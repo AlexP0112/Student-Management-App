@@ -22,13 +22,22 @@ services:
       mode: replicated
       replicas: 1
   
-  mongo:
+  mongo-school-service:
     image: 'mongo:4.2.16-bionic'
-    ports:
-      - "27017:27017"
+    command: mongod --port 27018
     environment:
       MONGO_INITDB_DATABASE: logs
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
-      - ./db-data/mongo/:/data/db
+      - ../school-service/data/db-data:/data/db
+    
+  mongo-personal-data-service:
+    image: 'mongo:4.2.16-bionic'
+    command: mongod --port 27019
+    environment:
+      MONGO_INITDB_DATABASE: logs
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ../personal-data-service/data/db-data:/data/db

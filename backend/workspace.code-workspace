@@ -19,6 +19,12 @@
 		{
 			"name": "school-service",
 			"path": "school-service"
+		},
+		{
+			"path": "personal-data-service"
+		},
+		{
+			"path": "grades-register-service"
 		}
 	],
 	"settings": {}
