@@ -1,24 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+	"manouser.com/shared"
 )
 
 const webPort = "80"
 
 func main() {
-
-	log.Printf("Starting back-end server on port %s", webPort)
-
-	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%s", webPort),
-		Handler: routes(),
-	}
-
-	err := srv.ListenAndServe()
-	if err != nil {
-		log.Fatalf("Server failed to start: %v", err)
-	}
+	shared.HttpServerListen(webPort, routes)
 }
