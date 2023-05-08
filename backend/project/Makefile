@@ -2,6 +2,8 @@ SHELL=cmd.exe
 FRONT_END_BINARY=frontendApp.exe
 BACK_END_BINARY=backendApp
 SCHOOL_BINARY=schoolServiceApp
+PERSONAL_DATA_BINARY=personalDataServiceApp
+GRADES_REGISTER_BINARY=gradesRegisterServiceApp
 
 ## up: starts all containers in the background without forcing build
 up:
@@ -10,7 +12,7 @@ up:
 	@echo Docker images started!
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build: build_back_end build_school_service 
+up_build: build_back_end build_school_service build_personal_data_service build_grades_register_service
 	@echo Stopping docker images (if running...)
 	docker-compose down
 	@echo Building (when required) and starting docker images...
@@ -35,6 +37,18 @@ build_school_service:
 	chdir ..\school-service && set GOOS=linux&& set GOARCH=amd64&& set CGO_ENABLED=0 && go build -o ${SCHOOL_BINARY} ./cmd/api
 	@echo Done!	
 
+## build_personal_data_service: builds the personal data service binary as a linux executable
+build_personal_data_service:
+	@echo Building personal data service binary...
+	chdir ..\personal-data-service && set GOOS=linux&& set GOARCH=amd64&& set CGO_ENABLED=0 && go build -o ${PERSONAL_DATA_BINARY} ./cmd/api
+	@echo Done!
+
+## build_grades_register_service: builds the grades register service binary as a linux executable
+build_grades_register_service:
+	@echo Building grades register service binary...
+	chdir ..\grades-register-service && set GOOS=linux&& set GOARCH=amd64&& set CGO_ENABLED=0 && go build -o ${GRADES_REGISTER_BINARY} ./cmd/api
+	@echo Done!
+
 ## build_front: builds the front end binary
 build_front:
 	@echo Building front end binary...
@@ -55,7 +69,9 @@ stop_frontend:
 ## clean
 clean:
 	@echo Cleaning up...
+	chdir ..\mock-front-end && del ${FRONT_END_BINARY}
 	chdir ..\back-end && del ${BACK_END_BINARY}
 	chdir ..\school-service && del ${SCHOOL_BINARY}
-	chdir ..\mock-front-end && del ${FRONT_END_BINARY}
+	chdir ..\personal-data-service && del ${PERSONAL_DATA_BINARY}
+	chdir ..\grades-register-service && del ${GRADES_REGISTER_BINARY}
 	@echo Done!

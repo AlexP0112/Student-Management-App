@@ -21,6 +21,24 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+
+  personal-data-service:
+    build:
+      context: ./../personal-data-service
+      dockerfile: ./../personal-data-service/personal-data-service.dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  grades-register-service:
+    build:
+      context: ./../grades-register-service
+      dockerfile: ./../grades-register-service/grades-register-service.dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
   
   mongo-school-service:
     image: 'mongo:4.2.16-bionic'
@@ -41,3 +59,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - ../personal-data-service/data/db-data:/data/db
+
+  mongo-grades-register-service:
+    image: 'mongo:4.2.16-bionic'
+    command: mongod --port 27020
+    environment:
+      MONGO_INITDB_DATABASE: logs
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ../grades-register-service/data/db-data:/data/db

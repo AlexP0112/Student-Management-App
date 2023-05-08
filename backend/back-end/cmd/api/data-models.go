@@ -2,6 +2,7 @@ package main
 
 type requestPayload struct {
 	Action                 string                 `json:"action"`
+	Info                   string                 `json:"info,omitempty"`
 	SchoolEntry            schoolEntry            `json:"schoolEntry,omitempty"`
 	RegisterServicePayload registerServicePayload `json:"registerServicePayload,omitempty"`
 }

@@ -1,4 +1,4 @@
-module personal-data-service
+module grades-register-service
 
 go 1.20
 

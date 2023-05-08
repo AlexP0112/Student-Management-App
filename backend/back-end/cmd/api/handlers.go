@@ -20,8 +20,6 @@ func handleSubmission(w http.ResponseWriter, r *http.Request) {
 	switch requestPayload.Action {
 	case "addSchool":
 		addSchool(w, requestPayload.SchoolEntry)
-	case "getSchoolByName":
-		getSchoolByName(w, requestPayload.SchoolEntry.Name)
 	default:
 		shared.ErrorJSON(w, errors.New("unknown action"))
 	}
@@ -51,7 +49,24 @@ func addSchool(w http.ResponseWriter, s schoolEntry) {
 	shared.WriteJSON(w, http.StatusOK, payload)
 }
 
-func getSchoolByName(w http.ResponseWriter, name string) {
+func testGet(w http.ResponseWriter, r *http.Request) {
+	var requestPayload requestPayload
+
+	err := shared.ReadJSON(w, r, &requestPayload)
+	if err != nil {
+		shared.ErrorJSON(w, err)
+		return
+	}
+
+	switch requestPayload.Action {
+	case "getSchoolByName":
+		getSchoolByName(w, requestPayload.Info)
+	default:
+		shared.ErrorJSON(w, errors.New("unknown action"))
+	}
+}
+
+func getSchoolByName(w http.ResponseWriter, info string) {
 	client, err := rpc.Dial("tcp", "school-service:5001")
 	if err != nil {
 		shared.ErrorJSON(w, err)
@@ -60,7 +75,7 @@ func getSchoolByName(w http.ResponseWriter, name string) {
 
 	var reply schoolEntry
 
-	err = client.Call("RPCServer.GetSchoolByName", name, &reply)
+	err = client.Call("RPCServer.GetSchoolByName", info, &reply)
 
 	if err != nil {
 		shared.ErrorJSON(w, err)

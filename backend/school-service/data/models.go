@@ -8,10 +8,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type Models struct {
-	School SchoolEntry
-}
-
 type SchoolEntry struct {
 	Name        string       `bson:"name" json:"name"`
 	Departments []Department `bson:"departments" json:"departments"`
@@ -38,13 +34,6 @@ var mongoClient *mongo.Client
 func New(mongo *mongo.Client) {
 	mongoClient = mongo
 }
-
-// func New(mongo *mongo.Client) Models {
-// 	mongoClient = mongo
-// 	return Models{
-// 		School: SchoolEntry{},
-// 	}
-// }
 
 func InsertSchool(school SchoolEntry) error {
 	collection := mongoClient.Database("university").Collection("schools")
