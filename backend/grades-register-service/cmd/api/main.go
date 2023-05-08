@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"grades-register-service/data"
 	"log"
 	"net/rpc"
-	"personal-data-service/data"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -15,7 +15,7 @@ import (
 const (
 	webPort  = "80"
 	rpcPort  = "5001"
-	mongoURL = "mongodb://mongo-school-service:27019"
+	mongoURL = "mongodb://mongo-school-service:27020"
 )
 
 var mongoClient *mongo.Client

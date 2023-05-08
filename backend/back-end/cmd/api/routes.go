@@ -24,6 +24,8 @@ func routes() http.Handler {
 	mux.Use(middleware.Heartbeat("/ping"))
 
 	mux.Post("/handle", handleSubmission)
+	mux.Get("/testGet", testGet)
+	//mux.Get() /{name}
 
 	return mux
 }
