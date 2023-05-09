@@ -1,7 +1,9 @@
 import React from "react";
-import NavbarLogo from "../img/rapid-univ-cover.png";
+import NavbarLogo from "../img/rapid-univ-vertical.png";
 import { Navbar, Container, Button, Nav, NavDropdown } from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
+import { RxDashboard } from "react-icons/rx";
+import { IoSettingsOutline } from "react-icons/io5";
 
 type NavbarComp = {
 	currentUser: string;
@@ -11,7 +13,7 @@ export default function NavbarComp(props: NavbarComp) {
 	const { currentUser } = props;
 	return (
 		<Navbar bg='light' className='custom-class'>
-			<Navbar.Brand href='#home'>
+			<Navbar.Brand href='./	'>
 				<img
 					src={NavbarLogo}
 					width='250'
@@ -20,17 +22,19 @@ export default function NavbarComp(props: NavbarComp) {
 				/>
 			</Navbar.Brand>
 			{/* <Navbar.Collapse className='mb-4'> */}
-			<NavbarCollapse className='d-flex flex-column gap-4 fs-4 mt-2 align-items-center justify-content-center'>
-				<Nav.Item>
-					<Navbar.Text>Home page</Navbar.Text>
+			<NavbarCollapse className='w-100 d-flex flex-column gap-4 fs-4 mt-2 align-items-center justify-content-start'>
+				<Nav.Item className=' w-100 active-menu p-3'>
+					<RxDashboard className='me-2 '></RxDashboard>
+					<Navbar.Text>Dashboard</Navbar.Text>
 				</Nav.Item>
 
-				<Nav.Item>
-					<Navbar.Text>Home page</Navbar.Text>
+				<Nav.Item className='w-100 p-3'>
+					<IoSettingsOutline className='me-2'></IoSettingsOutline>
+					<Navbar.Text>Settings</Navbar.Text>
 				</Nav.Item>
-				<Nav.Item>
+				{/* <Nav.Item>
 					<Navbar.Text>Home page</Navbar.Text>
-				</Nav.Item>
+				</Nav.Item> */}
 			</NavbarCollapse>
 
 			<Navbar.Text>

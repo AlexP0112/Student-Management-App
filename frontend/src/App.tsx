@@ -5,11 +5,13 @@ import AdminDashboard from "./components/AdminDashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/App.css";
 import Student from "./components/Student";
+import AdminPage from "./components/AdminDashboard";
+import StudentPage from "./components/Student";
 
 function App() {
 	return (
 		<div className='App'>
-			<AdminDashboard />
+			<StudentPage />
 		</div>
 	);
 }

@@ -17,7 +17,7 @@
 	color: var(--primary-color) !important;
 }
 
-.zoom-in {
+.zoom-in:hover {
 	scale: 1.1;
 }
 
@@ -33,8 +33,21 @@
 	.custom-class {
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: flex-start;
 		height: 100vh;
 		width: auto;
 	}
+}
+
+.active-menu {
+	border-left: 7px solid var(--primary-color);
+	background-color: var(--third-color);
+}
+
+a {
+	text-decoration: none;
+}
+
+.nav-item {
+	cursor: pointer;
 }
