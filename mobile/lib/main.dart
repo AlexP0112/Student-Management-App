@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ip_project/student.dart';
+import 'package:ip_project/views.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +12,7 @@ class MyApp extends StatelessWidget {
   // the root widget
   @override
   Widget build(BuildContext context) {
+    CurrentData.addData();
     return MaterialApp(
       title: 'Student App',
       theme: ThemeData(
@@ -31,17 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedViewIndex = 0;
-  static const List<Widget> _views = <Widget>[
-    Center(
-      child: Text("home"),
-    ),
-    Center(
-      child: Text("grades"),
-    ),
-    Center(
-      child: Text("requests"),
-    )
-  ];
+  static final List<Widget> _views = ViewCreator.getViews();
 
   void _onItemInNavigationBarPressed(int index) {
     setState(() {
