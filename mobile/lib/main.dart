@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedViewIndex = 0;
-  static final List<Widget> _views = ViewCreator.getViews();
+  static final List<Widget> _views = ViewProvider.getViews();
 
   void _onItemInNavigationBarPressed(int index) {
     setState(() {
@@ -44,11 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildBottomNavigationBar() {
     return BottomNavigationBar(
+        showSelectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.grading), label: 'Grades'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.messenger), label: 'Requests')
+              icon: Icon(Icons.pending), label: 'Requests status'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.message), label: 'Create request'),
         ],
         selectedItemColor: Colors.amber[800],
         currentIndex: _selectedViewIndex,
@@ -59,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called
     return Scaffold(
+        backgroundColor: Colors.teal[200],
         appBar: AppBar(title: const Text("Student App")),
         body: _views.elementAt(_selectedViewIndex),
         bottomNavigationBar: _buildBottomNavigationBar());
