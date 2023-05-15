@@ -4,6 +4,7 @@ import "./App.css";
 import AdminDashboard from "./components/AdminDashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/App.css";
+import animations from "./css/animations.module.css";
 import Student from "./components/Student";
 import AdminPage from "./components/AdminDashboard";
 import StudentPage from "./components/Student";
