@@ -25,6 +25,9 @@
 		},
 		{
 			"path": "grades-register-service"
+		},
+		{
+			"path": "mail-service"
 		}
 	],
 	"settings": {}

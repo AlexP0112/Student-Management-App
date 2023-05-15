@@ -11,13 +11,6 @@ import (
 
 type RPCServer struct{}
 
-type RPCSchoolPayload struct {
-	Name        string
-	Departments []data.Department
-}
-
-//type RPC
-
 func (r *RPCServer) AddSchool(payload RPCSchoolPayload, reply *string) error {
 	err := data.InsertSchool(data.SchoolEntry{
 		Name:        payload.Name,
@@ -51,12 +44,7 @@ func (r *RPCServer) GetSchoolByName(payload string, reply *RPCSchoolPayload) err
 	return nil
 }
 
-type RPCAddDepartmentsPayload struct {
-	Name        string
-	Departments []data.Department
-}
-
-func (r *RPCServer) AddDepartments(payload RPCAddDepartmentsPayload, reply *string) error {
+func (r *RPCServer) AddDepartments(payload RPCSchoolPayload, reply *string) error {
 	err := data.InsertDepartments(payload.Name, payload.Departments)
 	if err != nil {
 		log.Println("Error inserting departments")
@@ -66,11 +54,6 @@ func (r *RPCServer) AddDepartments(payload RPCAddDepartmentsPayload, reply *stri
 	*reply = "Success logging info to database"
 
 	return nil
-}
-
-type RPCDeleteDepartmentsPayload struct {
-	Name        string
-	Departments []string
 }
 
 func (r *RPCServer) DeleteDepartments(payload RPCDeleteDepartmentsPayload, reply *string) error {
@@ -85,12 +68,6 @@ func (r *RPCServer) DeleteDepartments(payload RPCDeleteDepartmentsPayload, reply
 	return nil
 }
 
-type RPCChangeNamePayload struct {
-	SchoolName           string
-	FormerDepartmentName string
-	NewDepartmentName    string
-}
-
 func (r *RPCServer) ChangeDepartmentName(payload RPCChangeNamePayload, reply *string) error {
 	err := data.ChangeDepartmentName(payload.SchoolName, payload.FormerDepartmentName, payload.NewDepartmentName)
 	if err != nil {
@@ -101,12 +78,6 @@ func (r *RPCServer) ChangeDepartmentName(payload RPCChangeNamePayload, reply *st
 	*reply = "Success changing department name"
 
 	return nil
-}
-
-type RPCTeachersPayload struct {
-	SchoolName     string
-	DepartmentName string
-	Teachers       []string
 }
 
 func (r *RPCServer) InsertTeachers(payload RPCTeachersPayload, reply *string) error {
@@ -133,12 +104,6 @@ func (r *RPCServer) DeleteTeachers(payload RPCTeachersPayload, reply *string) er
 	return nil
 }
 
-type RPCInsertYearsOfStudyPayload struct {
-	SchoolName     string
-	DepartmentName string
-	YearsOfStudy   []data.YearOfStudy
-}
-
 func (r *RPCServer) InsertYearsOfStudy(payload RPCInsertYearsOfStudyPayload, reply *string) error {
 	err := data.InsertYearsOfStudy(payload.SchoolName, payload.DepartmentName, payload.YearsOfStudy)
 	if err != nil {
@@ -151,13 +116,6 @@ func (r *RPCServer) InsertYearsOfStudy(payload RPCInsertYearsOfStudyPayload, rep
 	return nil
 }
 
-type RPCDeleteYearsOfStudyPayload struct {
-	SchoolName          string
-	DepartmentName      string
-	TypesOfYearsOfStudy []string
-	YearsOfStudy        []int
-}
-
 func (r *RPCServer) DeleteYearsOfStudy(payload RPCDeleteYearsOfStudyPayload, reply *string) error {
 	err := data.DeleteYearsOfStudy(payload.SchoolName, payload.DepartmentName, payload.TypesOfYearsOfStudy, payload.YearsOfStudy)
 	if err != nil {
@@ -168,14 +126,6 @@ func (r *RPCServer) DeleteYearsOfStudy(payload RPCDeleteYearsOfStudyPayload, rep
 	*reply = "Success deleting years of study"
 
 	return nil
-}
-
-type RPCSubjectsPayload struct {
-	SchoolName      string
-	DepartmentName  string
-	YearOfStudyType string
-	YearOfStudy     int
-	Subjects        []string
 }
 
 func (r *RPCServer) InsertSubjects(payload RPCSubjectsPayload, reply *string) error {
@@ -200,14 +150,6 @@ func (r *RPCServer) DeleteSubjects(payload RPCSubjectsPayload, reply *string) er
 	*reply = "Success deleting subjects"
 
 	return nil
-}
-
-type RPCChangeNumberOfPayload struct {
-	SchoolName      string
-	DepartmentName  string
-	YearOfStudyType string
-	YearOfStudy     int
-	NewNumber       int
 }
 
 func (r *RPCServer) ChangeNumberOfSerieses(payload RPCChangeNumberOfPayload, reply *string) error {

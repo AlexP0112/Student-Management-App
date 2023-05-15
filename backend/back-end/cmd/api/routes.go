@@ -25,6 +25,7 @@ func routes() http.Handler {
 
 	mux.Use(middleware.Heartbeat("/ping"))
 
+	// School Service routes
 	mux.Post("/addSchool", handlers.AddSchool)
 	mux.Post("/addDepartments", handlers.AddDepartments)
 	mux.Post("/deleteDepartments", handlers.DeleteDepartments)
@@ -39,8 +40,16 @@ func routes() http.Handler {
 	mux.Post("/changeNumberOfGroups", handlers.ChangeNumberOfGroups)
 
 	mux.Get("/getSchool/{name}", handlers.GetSchoolByName)
-
 	// ^ one get for the entire school, maybe more specific would make sense
+
+	// Mail Service routes
+	mux.Post("/addSecretaryRequest", handlers.AddSecretaryRequest)
+	mux.Post("/deleteSecretaryRequest/{id}", handlers.DeleteSecretaryRequest)
+	mux.Post("/updateSecretaryRequest", handlers.UpdateSecretaryRequest)
+
+	mux.Get("/getSecretaryRequestsByStatus/{status}", handlers.GetSecretaryRequestsByStatus)
+	mux.Get("/getSecretaryRequestsByCNP/{cnp}", handlers.GetSecretaryRequestsByCNP)
+	mux.Get("/getSecretaryRequestByID/{id}", handlers.GetSecretaryRequestByID)
 
 	return mux
 }
