@@ -4,8 +4,20 @@
 	--third-color: rgb(221, 221, 221);
 }
 
+body {
+	font-family: "Roboto", sans-serif;
+}
+
+.bg-primary-clr {
+	background-color: var(--primary-color);
+}
+
 .color-primary {
 	color: var(--primary-color);
+}
+
+.color-secondary {
+	color: var(--third-color);
 }
 
 .bg-zoom-in:hover {
@@ -50,4 +62,35 @@ a {
 
 .nav-item {
 	cursor: pointer;
+}
+
+.w-fit-content {
+	width: fit-content;
+}
+
+.flex-row-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-col-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.minw-fit-content {
+	min-width: fit-content;
+}
+
+.aspect-ratio-100 {
+	aspect-ratio: 1/1;
+}
+
+@media (min-width: 768px) {
+	.fs-md {
+		font-size: 1.5rem !important;
+	}
 }

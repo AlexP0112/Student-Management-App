@@ -7,6 +7,7 @@ import "./css/App.css";
 import Student from "./components/Student";
 import AdminPage from "./components/AdminDashboard";
 import StudentPage from "./components/Student";
+import SecretaryPage from "./components/Secretary";
 
 function App() {
 	return (
