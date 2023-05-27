@@ -7,22 +7,22 @@ class Student {
   String email;
   String phoneNumber;
 
-  List<Grade> grades = [];
+  List<SemesterGrades> gradesBySemester = [];
   List<Request> requests = [];
 
   Student(this.name, this.group, this.year, this.faculty, this.department,
       this.email, this.phoneNumber);
 
-  List<Grade> getGrades() {
-    return grades;
+  List<SemesterGrades> getGradesBySemester() {
+    return gradesBySemester;
   }
 
   List<Request> getRequests() {
     return requests;
   }
 
-  void setGrades(List<Grade> newGrades) {
-    grades = newGrades;
+  void setGrades(List<SemesterGrades> newGrades) {
+    gradesBySemester = newGrades;
   }
 
   void addRequest(String title, String description) {
@@ -33,22 +33,18 @@ class Student {
     requests = req;
   }
 
-  void setNewGradeForSubject(String subject, int newGrade) {
-    for (Grade g in grades) {
-      if (g.subject == subject) {
-        g.setGrade(newGrade);
-        break;
-      }
-    }
-  }
-
   double getAverageGrade() {
     double sum = 0;
-    for (Grade g in grades) {
-      sum = sum + g.grade.toDouble();
+    int numberOfGrades = 0;
+
+    for (SemesterGrades semester in gradesBySemester) {
+      for (Grade g in semester.grades) {
+        sum = sum + g.grade.toDouble();
+        numberOfGrades += 1;
+      }
     }
 
-    return sum / grades.length.toDouble();
+    return sum / numberOfGrades.toDouble();
   }
 }
 
@@ -61,6 +57,15 @@ class Grade {
   void setGrade(int newGrade) {
     grade = newGrade;
   }
+}
+
+class SemesterGrades {
+  int year;
+  int semester;
+
+  List<Grade> grades;
+
+  SemesterGrades(this.year, this.semester, this.grades);
 }
 
 class Request {
@@ -82,6 +87,8 @@ class CurrentData {
       '+40743876451');
 
   static void addData() {
+    List<SemesterGrades> allGrades = [];
+
     List<Grade> grades = [];
     grades.add(Grade('Fizica', 8));
     grades.add(Grade('Analiza matematica', 9));
@@ -90,7 +97,32 @@ class CurrentData {
     grades.add(Grade('Proiectare logica', 9));
     grades.add(Grade('Ingineria programelor', 10));
 
-    currentStudent.setGrades(grades);
+    SemesterGrades semester1 = SemesterGrades(3, 1, grades);
+    allGrades.add(semester1);
+
+    List<Grade> grades2 = [];
+    grades2.add(Grade('Fizica2', 8));
+    grades2.add(Grade('Analiza matematica2', 9));
+    grades2.add(Grade('Algebra2', 6));
+    grades2.add(Grade('Proiectarea algoritmilor2', 10));
+    grades2.add(Grade('Proiectare logica2', 9));
+    grades2.add(Grade('Ingineria programelor2', 10));
+
+    SemesterGrades semester2 = SemesterGrades(3, 2, grades2);
+    allGrades.add(semester2);
+
+    List<Grade> grades3 = [];
+    grades3.add(Grade('Fizica3', 8));
+    grades3.add(Grade('Analiza matematica3', 9));
+    grades3.add(Grade('Algebra3', 6));
+    grades3.add(Grade('Proiectarea algoritmilor3', 10));
+    grades3.add(Grade('Proiectare logica3', 9));
+    grades3.add(Grade('Ingineria programelor3', 10));
+
+    SemesterGrades semester3 = SemesterGrades(2, 1, grades3);
+    allGrades.add(semester3);
+
+    currentStudent.setGrades(allGrades);
 
     List<Request> requests = [];
     requests.add(Request('Request1', 'some description here', false));

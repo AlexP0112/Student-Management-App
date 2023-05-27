@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ip_project/request_form.dart';
-import 'package:ip_project/student.dart';
+import 'package:ip_project/data.dart';
 
 class GradesView extends StatefulWidget {
   const GradesView({super.key});
@@ -12,14 +12,39 @@ class GradesView extends StatefulWidget {
 class _GradesViewState extends State<GradesView> {
   @override
   Widget build(BuildContext context) {
-    return ListView(padding: const EdgeInsets.all(10), children: <Widget>[
-      const Center(
-          heightFactor: 4.0,
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(10),
+        children: _getAllGradesListView(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _refreshGrades,
+        child: const Icon(Icons.refresh),
+      ),
+    );
+  }
+
+  List<Widget> _getAllGradesListView() {
+    List<Widget> result = [];
+
+    result.add(const Center(
+        heightFactor: 4.0,
+        child: Text(
+          'Your grades',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        )));
+
+    int index = 0;
+    for (SemesterGrades semester
+        in CurrentData.currentStudent.gradesBySemester) {
+      result.add(Center(
+          heightFactor: 1.0,
           child: Text(
-            'Your grades',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-          )),
-      DataTable(columns: const [
+            'Year ${semester.year.toString()}, Semester ${semester.semester.toString()}',
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          )));
+
+      result.add(DataTable(columns: const [
         DataColumn(
             label: Text('Subject',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
@@ -27,14 +52,22 @@ class _GradesViewState extends State<GradesView> {
             numeric: true,
             label: Text('Grade',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-      ], rows: _getGradesTableInfo()),
-    ]);
+      ], rows: _getGradesTableInfo(index)));
+      index++;
+    }
+
+    return result;
   }
 
-  List<DataRow> _getGradesTableInfo() {
+  void _refreshGrades() {
+    // TODO: Stefan
+  }
+
+  List<DataRow> _getGradesTableInfo(int index) {
     List<DataRow> result = [];
 
-    for (Grade g in CurrentData.currentStudent.getGrades()) {
+    for (Grade g
+        in CurrentData.currentStudent.getGradesBySemester()[index].grades) {
       result.add(DataRow(cells: [
         DataCell(Text(g.subject)),
         DataCell(Text(g.grade.toString())),
@@ -55,26 +88,38 @@ class RequestsView extends StatefulWidget {
 class _RequestsViewState extends State<RequestsView> {
   @override
   Widget build(BuildContext context) {
-    return ListView(padding: const EdgeInsets.all(10), children: <Widget>[
-      const Center(
-          heightFactor: 4.0,
-          child: Text(
-            'Office requests status',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-          )),
-      DataTable(columns: const [
-        DataColumn(
-            label: Text('Title',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-        DataColumn(
-            label: Text('Description',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-        DataColumn(
-            label: Text('Status',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-        DataColumn(label: Text(''))
-      ], rows: _getRequestsTableInfo()),
-    ]);
+    return Scaffold(
+        body: ListView(padding: const EdgeInsets.all(10), children: <Widget>[
+          const Center(
+              heightFactor: 4.0,
+              child: Text(
+                'Office requests status',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              )),
+          DataTable(columns: const [
+            DataColumn(
+                label: Text('Title',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+            DataColumn(
+                label: Text('Description',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+            DataColumn(
+                label: Text('Status',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+            DataColumn(label: Text(''))
+          ], rows: _getRequestsTableInfo()),
+        ]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _refreshRequests,
+          child: const Icon(Icons.refresh),
+        ));
+  }
+
+  void _refreshRequests() {
+    // TODO: Stefan
   }
 
   List<DataRow> _getRequestsTableInfo() {
