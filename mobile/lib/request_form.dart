@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ip_project/student.dart';
+import 'package:ip_project/data.dart';
 
 class RequestForm extends StatefulWidget {
   const RequestForm({super.key});
@@ -74,8 +74,8 @@ class RequestFormState extends State<RequestForm> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Data is in processing.')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Sending request...')));
                     CurrentData.currentStudent.addRequest(
                         _titleController.text, _descriptionController.text);
                   }

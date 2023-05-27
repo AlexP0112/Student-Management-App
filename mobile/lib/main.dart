@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ip_project/student.dart';
+import 'package:ip_project/data.dart';
 import 'package:ip_project/views.dart';
 
 void main() {
@@ -64,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called
     return Scaffold(
-        backgroundColor: Colors.teal[200],
         appBar: AppBar(title: const Text("Student App")),
         body: _views.elementAt(_selectedViewIndex),
         bottomNavigationBar: _buildBottomNavigationBar());
