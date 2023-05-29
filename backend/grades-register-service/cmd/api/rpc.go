@@ -41,3 +41,15 @@ func (r *RPCServer) getGradesByCNP(payload string, reply *[]data.StudentRegister
 	*reply = grades
 	return nil
 }
+
+func (r *RPCServer) addGradeToSubject(payload data.AddGradePayload, reply *string) error {
+	collection := mongoClient.Database("university").Collection("grades")
+	filter := bson.M{"cnp": payload.CNP}
+	update := bson.M{"$set": bson.M{"history.subjects." + payload.Subject: payload.Grade}}
+	_, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		return err
+	}
+	*reply = "OK"
+	return nil
+}
