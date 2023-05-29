@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { FaUserEdit } from "react-icons/fa";
 import NavbarComp from "./NavbarComp";
-import UserPageWrapper from "./UserPageWrapper";
+import UserPageWrapper from "./UserPageWrapper"	;
 
 const AdminDashboard = function () {
 	return (

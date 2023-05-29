@@ -9,11 +9,13 @@ import Student from "./components/Student";
 import AdminPage from "./components/AdminDashboard";
 import StudentPage from "./components/Student";
 import SecretaryPage from "./components/Secretary";
+import AdminStudents from "./components/AdminStudents";
+import AdminStudentsPage from "./components/AdminStudents";
 
 function App() {
 	return (
 		<div className='App'>
-			<StudentPage />
+			<AdminStudentsPage />
 		</div>
 	);
 }

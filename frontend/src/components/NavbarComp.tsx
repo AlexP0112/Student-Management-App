@@ -16,7 +16,7 @@ export default function NavbarComp(props: NavbarComp) {
 			<Navbar.Brand href='./	'>
 				<img
 					src={NavbarLogo}
-					width='250'
+					width='150'
 					className='d-inline-block justify-content-start '
 					alt='Rapid Univ logo'
 				/>
