@@ -15,7 +15,7 @@ import (
 const (
 	webPort  = "80"
 	rpcPort  = "5001"
-	mongoURL = "mongodb://mongo-school-service:27019"
+	mongoURL = "mongodb://mongo-personal-data-service:27019"
 )
 
 var mongoClient *mongo.Client
