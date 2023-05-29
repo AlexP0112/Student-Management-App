@@ -39,7 +39,16 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-  
+
+  mail-service:
+    build:
+      context: ./../mail-service
+      dockerfile: ./../mail-service/mail-service.dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+
   mongo-school-service:
     image: 'mongo:4.2.16-bionic'
     command: mongod --port 27018
@@ -49,7 +58,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - ../school-service/data/db-data:/data/db
-    
+    ports:
+      - "27018:27018"
+
   mongo-personal-data-service:
     image: 'mongo:4.2.16-bionic'
     command: mongod --port 27019
@@ -59,6 +70,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - ../personal-data-service/data/db-data:/data/db
+    ports:
+      - "27019:27019"
 
   mongo-grades-register-service:
     image: 'mongo:4.2.16-bionic'
@@ -69,3 +82,17 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - ../grades-register-service/data/db-data:/data/db
+    ports:
+      - "27020:27020"
+
+  mongo-mail-service:
+    image: 'mongo:4.2.16-bionic'
+    command: mongod --port 27021
+    environment:
+      MONGO_INITDB_DATABASE: logs
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ../mail-service/data/db-data:/data/db
+    ports:
+      - "27021:27021"

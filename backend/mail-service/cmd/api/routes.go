@@ -12,7 +12,6 @@ func routes() http.Handler {
 	mux := chi.NewRouter()
 
 	// specify who is allowed to connect
-	// trebe scoase majoritatea de aici cred
 
 	mux.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},

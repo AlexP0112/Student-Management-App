@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ip_project/data.dart';
+import 'package:ip_project/views.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +12,7 @@ class MyApp extends StatelessWidget {
   // the root widget
   @override
   Widget build(BuildContext context) {
+    CurrentData.addData();
     return MaterialApp(
       title: 'Student App',
       theme: ThemeData(
@@ -31,17 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedViewIndex = 0;
-  static const List<Widget> _views = <Widget>[
-    Center(
-      child: Text("home"),
-    ),
-    Center(
-      child: Text("grades"),
-    ),
-    Center(
-      child: Text("requests"),
-    )
-  ];
+  static final List<Widget> _views = ViewProvider.getViews();
 
   void _onItemInNavigationBarPressed(int index) {
     setState(() {
@@ -51,11 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildBottomNavigationBar() {
     return BottomNavigationBar(
+        showSelectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.grading), label: 'Grades'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.messenger), label: 'Requests')
+              icon: Icon(Icons.pending), label: 'Requests status'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.message), label: 'Create request'),
         ],
         selectedItemColor: Colors.amber[800],
         currentIndex: _selectedViewIndex,
