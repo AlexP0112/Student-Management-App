@@ -54,6 +54,7 @@ func routes() http.Handler {
 	// Grades Register Service routes
 	mux.Post("/addGrade", handlers.AddGrade)
 	mux.Get("/getGradesByCNP/{cnp}", handlers.GetGradesByCNP)
+	mux.Post("/addGradeRegister", handlers.AddGradeRegister)
 
 	// Personal Data Service routes
 	mux.Get("/getPersonalDataByCNP/{cnp}", handlers.GetPersonalDataByCNP)

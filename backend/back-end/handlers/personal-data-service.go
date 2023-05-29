@@ -9,77 +9,77 @@ import (
 	"manouser.com/shared"
 )
 
-func getPersonalDataByCNP(w http.ResponseWriter, r *http.Request) {
+func GetPersonalDataByCNP(w http.ResponseWriter, r *http.Request) {
 	cnp := chi.URLParam(r, "cnp")
 
-	client, err := rpc.Dial("tcp", "personal-data-service:5002")
+	client, err := rpc.Dial("tcp", "personal-data-service:5001")
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
 	var reply dtos.PersonalInfo
-	err = client.Call("RPCServer.getPersonalDataByCNP", cnp, &reply)
+	err = client.Call("RPCServer.GetPersonalDataByCNP", cnp, &reply)
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	shared.SendResponse(w, reply)
+	shared.WriteJSON(w, http.StatusOK, reply)
 }
 
-func getPersonalDataByFirstName(w http.ResponseWriter, r *http.Request) {
+func GetPersonalDataByFirstName(w http.ResponseWriter, r *http.Request) {
 	firstName := chi.URLParam(r, "firstName")
 
-	client, err := rpc.Dial("tcp", "personal-data-service:5002")
+	client, err := rpc.Dial("tcp", "personal-data-service:5001")
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
 	var reply []dtos.PersonalInfo
-	err = client.Call("RPCServer.getPersonalDataByFirstName", firstName, &reply)
+	err = client.Call("RPCServer.GetPersonalDataByFirstName", firstName, &reply)
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	shared.SendResponse(w, reply)
+	shared.WriteJSON(w, http.StatusOK, reply)
 }
 
-func getAllPersonalData(w http.ResponseWriter, r *http.Request) {
-	client, err := rpc.Dial("tcp", "personal-data-service:5002")
+func GetAllPersonalData(w http.ResponseWriter, r *http.Request) {
+	client, err := rpc.Dial("tcp", "personal-data-service:5001")
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
 	var reply []dtos.PersonalInfo
-	err = client.Call("RPCServer.getAllPersonalData", "", &reply)
+	err = client.Call("RPCServer.GetAllPersonalData", "", &reply)
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	shared.SendResponse(w, reply)
+	shared.WriteJSON(w, http.StatusOK, reply)
 }
 
-func addPersonalData(w http.ResponseWriter, r *http.Request) {
+func AddPersonalData(w http.ResponseWriter, r *http.Request) {
 	var payload dtos.PersonalInfo
-	shared.ReadBody(r, &payload)
+	shared.ReadJSON(w, r, &payload)
 
-	client, err := rpc.Dial("tcp", "personal-data-service:5002")
+	client, err := rpc.Dial("tcp", "personal-data-service:5001")
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
 	var reply string
-	err = client.Call("RPCServer.addPersonalData", payload, &reply)
+	err = client.Call("RPCServer.AddPersonalData", payload, &reply)
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	shared.SendResponse(w, reply)
+	shared.WriteJSON(w, http.StatusOK, reply)
 }

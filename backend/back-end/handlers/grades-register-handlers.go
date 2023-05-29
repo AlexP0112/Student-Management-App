@@ -11,39 +11,59 @@ import (
 
 func AddGrade(w http.ResponseWriter, r *http.Request) {
 	var payload dtos.AddGradePayload
-	shared.ReadBody(r, &payload)
+	shared.ReadJSON(w, r, &payload)
 
-	client, err := rpc.Dial("tcp", "grade-register-service:5001")
+	client, err := rpc.Dial("tcp", "grades-register-service:5001")
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
 	var reply string
-	err = client.Call("RPCServer.addGradeToSubject", payload, &reply)
+	err = client.Call("RPCServer.AddGradeToSubject", payload, &reply)
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	shared.SendResponse(w, reply)
+	shared.WriteJSON(w, http.StatusOK, reply)
 }
 
 func GetGradesByCNP(w http.ResponseWriter, r *http.Request) {
 	cnp := chi.URLParam(r, "cnp")
 
-	client, err := rpc.Dial("tcp", "grade-register-service:5001")
+	client, err := rpc.Dial("tcp", "grades-register-service:5001")
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
 	var reply []dtos.StudentRegister
-	err = client.Call("RPCServer.getGradesByCNP", cnp, &reply)
+	err = client.Call("RPCServer.GetGradesByCNP", cnp, &reply)
 	if err != nil {
-		shared.SendError(w, err)
+		shared.ErrorJSON(w, err)
 		return
 	}
 
-	shared.SendResponse(w, reply)
+	shared.WriteJSON(w, http.StatusOK, reply)
+}
+
+func AddGradeRegister(w http.ResponseWriter, r *http.Request) {
+	var payload dtos.StudentRegister
+	shared.ReadJSON(w, r, &payload)
+
+	client, err := rpc.Dial("tcp", "grades-register-service:5001")
+	if err != nil {
+		shared.ErrorJSON(w, err)
+		return
+	}
+
+	var reply string
+	err = client.Call("RPCServer.AddGradeRegister", payload, &reply)
+	if err != nil {
+		shared.ErrorJSON(w, err)
+		return
+	}
+
+	shared.WriteJSON(w, http.StatusOK, reply)
 }

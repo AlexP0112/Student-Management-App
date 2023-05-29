@@ -4,6 +4,7 @@ type AddGradePayload struct {
 	CNP     string  `json:"cnp"`
 	Subject string  `json:"subject"`
 	Grade   float32 `json:"grade"`
+	Year    int     `json:"year"`
 }
 
 type StudentRegister struct {

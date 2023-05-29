@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/bson"
 	"personal-data-service/data"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 type RPCServer struct{}
@@ -11,7 +12,7 @@ type RPCServer struct{}
 type RPCPayload struct {
 }
 
-func (r *RPCServer) getAllPersonalData(reply *[]data.PersonalInfo) error {
+func (r *RPCServer) GetAllPersonalData(reply *[]data.PersonalInfo) error {
 	var personalInfo []data.PersonalInfo
 	collection := mongoClient.Database("university").Collection("personalData")
 	cursor, err := collection.Find(context.Background(), bson.M{})
@@ -26,7 +27,7 @@ func (r *RPCServer) getAllPersonalData(reply *[]data.PersonalInfo) error {
 	return nil
 }
 
-func (r *RPCServer) getPersonalDataByCNP(payload string, reply *data.PersonalInfo) error {
+func (r *RPCServer) GetPersonalDataByCNP(payload string, reply *data.PersonalInfo) error {
 	var personalInfo data.PersonalInfo
 	collection := mongoClient.Database("university").Collection("personalData")
 	filter := bson.M{"cnp": payload}
@@ -38,7 +39,7 @@ func (r *RPCServer) getPersonalDataByCNP(payload string, reply *data.PersonalInf
 	return nil
 }
 
-func (r *RPCServer) getPersonalDataByFirstName(payload string, reply *[]data.PersonalInfo) error {
+func (r *RPCServer) GetPersonalDataByFirstName(payload string, reply *[]data.PersonalInfo) error {
 	var personalInfo []data.PersonalInfo
 	collection := mongoClient.Database("university").Collection("personalData")
 	filter := bson.M{"firstName": payload}
@@ -54,7 +55,7 @@ func (r *RPCServer) getPersonalDataByFirstName(payload string, reply *[]data.Per
 	return nil
 }
 
-func (r *RPCServer) addPersonalData(payload data.PersonalInfo, reply *string) error {
+func (r *RPCServer) AddPersonalData(payload data.PersonalInfo, reply *string) error {
 	collection := mongoClient.Database("university").Collection("personalData")
 	_, err := collection.InsertOne(context.Background(), payload)
 	if err != nil {

@@ -1,0 +1,8 @@
+/backend/project/db-data
+/backend/personal-data-service/data/db-data
+/backend/register-service/data/db-data
+/backend/school-service/data/db-data
+/backend/grades-register-service/data/db-data
+/backend/mail-service/data/db-data
+backend/school-service/data/db-data/mongod.lock
+backend/school-service/data/db-data/sizeStorer.wt

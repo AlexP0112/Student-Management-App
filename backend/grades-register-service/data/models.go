@@ -18,6 +18,7 @@ type AddGradePayload struct {
 	CNP     string  `bson:"cnp" json:"cnp"`
 	Subject string  `bson:"subject" json:"subject"`
 	Grade   float32 `bson:"grade" json:"grade"`
+	Year    int     `bson:"year" json:"year"`
 }
 
 var mongoClient *mongo.Client
