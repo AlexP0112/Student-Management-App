@@ -13,18 +13,10 @@ import NavbarComp from "./NavbarComp";
 import userPageWrapper from "./UserPageWrapper";
 import userDefaultPicture from "../img/user-default-picture.svg";
 import picture from "../img/student.jpg";
-import AddModal from "./ManageEntity";
+import ManageEntity from "./ManageEntity";
+import { FormGroupType, StudentType } from "../interfaces/DatabaseTypes";
 
-export type StudentType = {
-	id: number;
-	img?: string;
-	lastName: string;
-	firstName: string;
-	year: string;
-	faculty: string;
-	username: string;
-	email: string;
-};
+
 
 function AdminStudents() {
 	const [students, setStudents] = useState<StudentType[]>([
@@ -94,13 +86,96 @@ function AdminStudents() {
 		"Facultatea de Mecanica si Mecatronica",
 	];
 
+	const formGroups: FormGroupType[] = [
+		{
+			id: 1,
+			column: false,
+			inputs: [
+				{
+					id: 1,
+					name: "email",
+					label: "Email",
+					placeholder: "Email",
+					type: "email",
+				},
+			],
+			type: "control",
+		},
+
+		{
+			id: 2,
+			column: false,
+			inputs: [
+				{
+					id: 1,
+					name: "username",
+					label: "Username",
+					placeholder: "Username",
+					type: "text",
+				},
+			],
+			type: "control",
+		},
+
+		{
+			id: 3,
+			column: false,
+			inputs: [
+				{
+					id: 1,
+					name: "password",
+					label: "Password",
+					placeholder: "Password",
+					type: "password",
+				},
+			],
+			type: "control",
+		},
+
+		{
+			id: 4,
+			column: false,
+			inputs: [
+				{
+					id: 1,
+					name: "cnp",
+					label: "CNP",
+					placeholder: "CNP",
+					type: "text",
+				},
+			],
+			type: "control",
+		},
+		{
+			id: 5,
+			column: true,
+			inputs: [
+				{
+					id: 1,
+					name: "lastName",
+					label: "Last Name",
+					placeholder: "Last Name",
+					type: "text",
+				},
+				{
+					id: 2,
+					name: "firstName",
+					label: "First Name",
+					placeholder: "First Name",
+					type: "text",
+				},
+			],
+			type: "control",
+		},
+	];
+
 	return (
-		<AddModal
+		<ManageEntity
 			data={students}
 			entity='student'
 			years={years}
-			faculties={faculties}
-		/>
+			faculties={faculties} formGroups={formGroups} />
+
 	);
 }
 

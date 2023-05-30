@@ -7,48 +7,46 @@ import {
 	Button,
 	CloseButton,
 	Table,
+	Card,
+	Container,
+	ListGroup,
 } from "react-bootstrap";
-import { StudentType } from "./AdminStudents";
-import { SecretaryType } from "./Secretary";
 import { useState, useEffect } from "react";
 import userDefaultPicture from "../img/user-default-picture.svg";
-import { randomUUID } from "crypto";
+import ModalComponent from "./ModalComponent";
+import { StudentType, SecretaryType, FormValuesType, StudentFromValuesType, SecretaryFormValuesType, FacultyFormValuesType, SubjectFormValuesType, FacultyType, SubjectType, FormGroupType } from "../interfaces/DatabaseTypes";
+import CardHeader from "react-bootstrap/esm/CardHeader";
+import facultyPicture from '../img/upb.jpg';
 
-type DataType = StudentType | SecretaryType;
-type ModalPropsType = {
+type DataType = StudentType | SecretaryType | FacultyType;
+
+type ManageEntityPropsType = {
 	data: DataType[];
-	entity: "student" | "secretary";
+	entity: "student" | "secretary" | "faculty";
 	years?: string[];
 	faculties?: string[];
+	formGroups: FormGroupType[];
 };
 
-type NewStudent = {
-	lastName: string;
-	firstName: string;
-	email: string;
-	cnp: string;
-	faculty: string;
 
-}
+export default function ManageEntity(props: ManageEntityPropsType) {
+	const { entity, years, faculties, formGroups } = props;
 
-export default function ManageEntity(props: ModalPropsType) {
-	const { entity, years, faculties } = props;
+	const [data, setData] = useState<DataType[]>(props.data);
 
-	const [data, setData] = useState(props.data);
+	console.log(data);
+
 	const [filteredData, setFilteredData] = useState(data);
 	const [searchValue, setSearchValue] = useState("");
 	const [newData, setNewData] = useState<DataType>({} as DataType);
-	const [formValues, setFormValues] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
-		username: "",
-	});
+	const [formValues, setFormValues] = useState<FormValuesType>({} as FormValuesType);
 
 	const [studentFormValues, setStudentFormValues] = useState({
 		year: years ? years[0] : "",
 		faculty: faculties ? faculties[0] : ""
 	})
+
+	const [newSubjects, setNewSubjects] = useState<SubjectType[]>([]);
 
 	useEffect(() => {
 		setFilteredData(data);
@@ -64,38 +62,76 @@ export default function ManageEntity(props: ModalPropsType) {
 
 	const handleShow = () => setShowModal(true);
 	const [showModal, setShowModal] = useState(false);
+	const handleClose = () => setShowModal(false);
 
 	useEffect(() => {
 		if (searchValue == "") {
 			setFilteredData(data);
 		}
 
-		const filtered = data.filter((dataEntity: DataType) =>
-			dataEntity.firstName.toLowerCase().includes(searchValue.toLowerCase())
-		);
+		let filtered;
+		switch (entity) {
+			case "student":
+				filtered = data.filter((dataEntity: DataType) =>
+				((dataEntity as StudentType | SecretaryType).lastName.toLowerCase().includes(searchValue.toLowerCase())
+				));
+				break;
+			case "secretary":
+				filtered = data.filter((dataEntity: DataType) =>
+				((dataEntity as StudentType | SecretaryType).lastName.toLowerCase().includes(searchValue.toLowerCase())
+				));
+				break;
+			default:
+			case "faculty":
+				filtered = data.filter((dataEntity: DataType) =>
+					(dataEntity as FacultyType).name.toLowerCase().includes(searchValue.toLowerCase())
+				);
+				break;
+		}
 
 		setFilteredData(filtered);
 	}, [searchValue]);
 
-	const handleClose = () => setShowModal(false);
 	const handleAddStudent = () => {
 		// @TODO Add Student to the database
-		console.log(formValues);	
+		console.log(formValues);
 		console.log(studentFormValues);
 
 		const ids = data.map((data: DataType) => data.id);
 		const maxID = Math.max(...ids);
 
-		if (entity === "student") {
-			setData([
-				...data,
-				{
-					id: maxID + 1,
-					...formValues,
+		let newData: DataType = {} as DataType;
+		switch (entity) {
+			case "student":
+				newData = {
+					id: data.length + 1,
+					...formValues as StudentFromValuesType,
 					...studentFormValues
-				},
-			]);
+				}
+				break;
+			case "secretary":
+				newData = {
+					id: data.length + 1,
+					...formValues as SecretaryFormValuesType
+				}
+				break;
+			case "faculty":
+				newData = {
+					id: data.length + 1,
+					...formValues as FacultyFormValuesType
+				}
+				break;
+			default:
+				break;
+
 		}
+
+
+		setData([
+			...data,
+			newData
+		]);
+
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,99 +139,18 @@ export default function ManageEntity(props: ModalPropsType) {
 		setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
 	};
 
-	
+
 	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = e.target;
 		setStudentFormValues((studentFormValues) => ({ ...studentFormValues, [name]: value }));
 	};
-	
-	const formGroups = [
-		{
-			id: 1,
-			column: false,
-			inputs: [
-				{
-					id: 1,
-					name: "email",
-					label: "Email",
-					placeholder: "Email",
-					type: "email",
-				},
-			],
-			type: "control",
-		},
 
-		{
-			id: 2,
-			column: false,
-			inputs: [
-				{
-					id: 1,
-					name: "username",
-					label: "Username",
-					placeholder: "Username",
-					type: "text",
-				},
-			],
-			type: "control",
-		},
 
-		{
-			id: 3,
-			column: false,
-			inputs: [
-				{
-					id: 1,
-					name: "password",
-					label: "Password",
-					placeholder: "Password",
-					type: "password",
-				},
-			],
-			type: "control",
-		},
-
-		{
-			id: 4,
-			column: false,
-			inputs: [
-				{
-					id: 1,
-					name: "cnp",
-					label: "CNP",
-					placeholder: "CNP",
-					type: "text",
-				},
-			],
-			type: "control",
-		},
-		{
-			id: 5,
-			column: true,
-			inputs: [
-				{
-					id: 1,
-					name: "lastName",
-					label: "Last Name",
-					placeholder: "Last Name",
-					type: "text",
-				},
-				{
-					id: 2,
-					name: "firstName",
-					label: "First Name",
-					placeholder: "First Name",
-					type: "text",
-				},
-			],
-			type: "control",
-		},
-	];
 
 	return (
 		<Row className='h-100 d-flex flex-column justify-content-start align-items-center'>
 			{/* @TODO Add button to add a student */}
-			<h1>List of students</h1>
+			<h1>List of {entity === "student" ? "students" : "secretaries"}</h1>
 			<div className='d-flex justify-content-between align-items-center'>
 				<Form className='d-flex justify-content-start mb-4'>
 					<Form.Control
@@ -210,9 +165,12 @@ export default function ManageEntity(props: ModalPropsType) {
 					/>
 				</Form>
 			</div>
-			<Modal show={showModal} onHide={handleClose}>
+
+
+
+			{/* <Modal show={showModal} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Add a New Student</Modal.Title>
+					<Modal.Title>Add a New {entity.charAt(0).toUpperCase() + entity.slice(1)}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
@@ -225,7 +183,7 @@ export default function ManageEntity(props: ModalPropsType) {
 											return (
 												<Col key={input.id}>
 													<Form.Label>{input.label}</Form.Label>
-													<Form.Control  {...formProps} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e)}/>
+													<Form.Control  {...formProps} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e)} />
 												</Col>
 											);
 										})}
@@ -237,7 +195,7 @@ export default function ManageEntity(props: ModalPropsType) {
 									return (
 										<Form.Group key={id} className='mb-3' controlId=''>
 											<Form.Label>{input.label}</Form.Label>
-											<Form.Control {...formProps} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e)}/>
+											<Form.Control {...formProps} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e)} />
 										</Form.Group>
 									);
 								})
@@ -260,7 +218,7 @@ export default function ManageEntity(props: ModalPropsType) {
 										<Col>
 											<Form.Label>Faculty</Form.Label>
 											<Form.Select name="faculty"
-											onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}
+												onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}
 												aria-label='Select faculty'
 												style={{
 													textOverflow: "ellipsis",
@@ -296,55 +254,78 @@ export default function ManageEntity(props: ModalPropsType) {
 						Save Changes
 					</Button>
 				</Modal.Footer>
-			</Modal>
-			<Table striped hover className='fw-bold color-primary mt-3'>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th></th>
-						<th>Last Name</th>
-						<th>First name</th>
-						<th>Year</th>
-						<th>Faculty</th>
-					</tr>
-				</thead>
-				<tbody>
-					{filteredData.map((dataEntity: DataType) => {
-						return (
-							<tr key={dataEntity.id}>
-								<td>{dataEntity.id}</td>
-								<td className='text-center'>
-									<img
-										src={dataEntity.img ? dataEntity.img : userDefaultPicture}
-										width={25}
-										height={25}
-										className='rounded-circle aspect-ratio-100'
-									/>
-								</td>
-								<td> {dataEntity.lastName}</td>
-								<td>{dataEntity.firstName}</td>
-								{"years" in dataEntity && <td> dataEntity.year</td>}
-								<td>{dataEntity.faculty}</td>
-								<td>
-									<Button>Edit</Button>
-								</td>
-								<td className='align-middle'>
-									<CloseButton
-										className='text-danger'
-										onClick={() => deleteStudent(dataEntity.id)}
-									/>
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</Table>
+			</Modal> */}
+
+			<ModalComponent showModal={showModal} formValues={formValues} setFormValues={setFormValues}
+				setShowModal={setShowModal} entity={entity} handleAddStudent={handleAddStudent} formGroups={formGroups}
+				years={years} faculties={faculties} setStudentFormValues={setStudentFormValues} />
+
+			{
+				(entity == "student" || entity == "secretary") &&
+				<Table striped hover className='fw-bold color-primary mt-3'>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th></th>
+							<th>Last Name</th>
+							<th>First name</th>
+							{entity == "student" && <th>Year</th>}
+							<th>Faculty</th>
+						</tr>
+					</thead>
+					<tbody>
+						{(filteredData).map((dataEntity) => {
+							return (
+								<tr key={dataEntity.id}>
+									<td>{dataEntity.id}</td>
+									<td className='text-center'>
+										<img
+											src={(dataEntity as StudentType | SecretaryType).img ? (dataEntity as StudentType | SecretaryType).img : userDefaultPicture}
+											width={25}
+											height={25}
+											className='rounded-circle aspect-ratio-100'
+										/>
+									</td>
+									<td> {(dataEntity as StudentType | SecretaryType).lastName}</td>
+									<td>{(dataEntity as StudentType | SecretaryType).firstName}</td>
+									{entity == "student" && <td> {(dataEntity as StudentType).year}</td>}
+									<td>{(dataEntity as StudentType | SecretaryType).faculty}</td>
+									<td>
+										<Button>Edit</Button>
+									</td>
+									<td className='align-middle'>
+										<CloseButton
+											className='text-danger'
+											onClick={() => deleteStudent(dataEntity.id)}
+										/>
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</Table>}
+
+			{entity == "faculty" && <Container>
+				<Row>
+					{filteredData.map((dataEntity) =>
+						<Col lg={3}>
+							<Card style={{ wordBreak: "keep-all", wordWrap: "normal", minWidth: "min-content" }} className='flex-col-center'>
+								<Card.Img variant="top" src={facultyPicture} className='box-shadow ' />
+								<CardHeader className='fw-bold'>{(dataEntity as FacultyType).name}</CardHeader>
+
+							</Card></Col>)}
+				</Row>
+
+			</Container>
+			}
+
+
 			<Button
-				className='w-fit-content  fw-bold border border-white rounded shadow'
+				className='w-fit-content fw-bold border border-white rounded shadow mt-2'
 				onClick={handleShow}
 			>
-				ADD STUDENT
+				ADD {entity.toUpperCase()}
 			</Button>
-		</Row>
+		</Row >
 	);
 }

@@ -10,9 +10,10 @@ import {
 	Ratio,
 	Row,
 } from "react-bootstrap";
-import { FaUserEdit } from "react-icons/fa";
+import { FaUserEdit, FaBook } from "react-icons/fa";
 import NavbarComp from "./NavbarComp";
-import UserPageWrapper from "./UserPageWrapper"	;
+import UserPageWrapper from "./UserPageWrapper";
+import { NavLink } from "react-router-dom";
 
 const AdminDashboard = function () {
 	return (
@@ -26,61 +27,69 @@ const AdminDashboard = function () {
 				<Container className='mt-5 d-flex' style={{ width: "75%" }}>
 					<Row>
 						<Col>
-							<Card
-								className='justify-content-center bg-zoom-in'
-								style={{
-									aspectRatio: "1/1",
-									// border: "1px solid red",
-									minWidth: "fit-content",
-								}}
-							>
-								<Card.Body
-									className='d-flex flex-column justify-content-center align-items-center zoom-in'
-									// style={{ border: "1px solid green" }}
+							<NavLink to="/dashboard/users">
+								<Card
+									className='justify-content-center bg-zoom-in'
+									style={{
+										aspectRatio: "1/1",
+										// border: "1px solid red",
+										minWidth: "fit-content",
+									}}
 								>
-									<FaUserEdit
-										style={{
-											width: "100%",
-											height: "8vh",
-											maxHeight: "15%",
-										}}
-									></FaUserEdit>
-									<Card.Title>Manage Students & Secretaries </Card.Title>
-									<Card.Text>
-										Create or delete accounts for the students or secretaries.
-										Change users info
-									</Card.Text>
-								</Card.Body>
-							</Card>
+
+									<Card.Body
+										className='d-flex flex-column justify-content-center align-items-center zoom-in'
+									// style={{ border: "1px solid green" }}
+									>
+										<FaUserEdit
+											style={{
+												width: "100%",
+												height: "8vh",
+												maxHeight: "15%",
+											}}
+										></FaUserEdit>
+
+										<Card.Title>Manage Students & Secretaries </Card.Title>
+										<Card.Text className="text-center p-2">
+											Create or delete accounts for the students or secretaries.
+											Change users info
+										</Card.Text>
+									</Card.Body>
+								</Card>
+							</NavLink>
 						</Col>
 						<Col>
-							<Card
-								className='justify-content-center bg-zoom-in'
-								style={{
-									aspectRatio: "1/1",
-									minWidth: "fit-content",
-								}}
-							>
-								<Card.Body className='d-flex flex-column justify-content-center align-items-center zoom-in'>
-									<FaUserEdit
-										style={{
-											width: "100%",
-											height: "10vh",
-											maxHeight: "15%",
-										}}
-									></FaUserEdit>
+							<NavLink to={"/dashboard/university/faculties"}>
+								<Card
+									className='justify-content-center bg-zoom-in'
+									style={{
+										aspectRatio: "1/1",
+										minWidth: "fit-content",
+									}}
+								>
+									<Card.Body className='d-flex flex-column justify-content-center align-items-center zoom-in'>
 
-									<Card.Title>Edit Faculties & Subjects</Card.Title>
-									<Card.Text>
-										Add or remove faculties and the corresponding subjects.
-									</Card.Text>
-								</Card.Body>
-							</Card>
+
+										<FaBook
+											style={{
+												width: "100%",
+												height: "10vh",
+												maxHeight: "15%",
+											}}
+										></FaBook>
+
+										<Card.Title>Edit Faculties & Subjects</Card.Title>
+										<Card.Text className="text-center p-2">
+											Add or remove faculties and the corresponding subjects.
+										</Card.Text>
+									</Card.Body>
+								</Card>
+							</NavLink>
 						</Col>
 					</Row>
 				</Container>
 			</Col>
-		</Row>
+		</Row >
 	);
 };
 

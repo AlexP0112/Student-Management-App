@@ -56,10 +56,18 @@ body {
 	background-color: var(--third-color);
 }
 
-a {
-	text-decoration: none;
+.primary-color{
+	color: var(--primary-color);
 }
 
+a {
+    text-decoration: none;
+	color: inherit;
+}
+
+a:hover{
+	color: var(--primary-color);
+}
 .nav-item {
 	cursor: pointer;
 }

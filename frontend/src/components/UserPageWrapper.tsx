@@ -1,6 +1,7 @@
 import React, { Component, ComponentElement, FunctionComponent } from "react";
 import { Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import NavbarComp from "./NavbarComp";
+import CustomBreadcrumb from "./CustomBreadcrumb";
 
 type UserPageWrapperPropsType = {
 	WrappedComponent: FunctionComponent;
@@ -19,12 +20,8 @@ const userPageWrapper = (props: UserPageWrapperPropsType) => {
 					<Row>
 						<Col>
 							<Breadcrumb className='color-primary fw-bold fs-5'>
-								<Breadcrumb.Item href='#'>
-									<span style={{ color: "gray" }}>Dashboard </span>
-								</Breadcrumb.Item>
-								<Breadcrumb.Item active>
-									<span className='color-primary'>Edit</span>
-								</Breadcrumb.Item>
+								<CustomBreadcrumb />
+
 							</Breadcrumb>
 						</Col>
 					</Row>

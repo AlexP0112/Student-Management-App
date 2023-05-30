@@ -1,9 +1,11 @@
 import React from "react";
 import NavbarLogo from "../img/rapid-univ-vertical.png";
-import { Navbar, Container, Button, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Button, Nav, NavDropdown, } from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import { RxDashboard } from "react-icons/rx";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useUserContext } from "../contexts/UserContext";
+import { Link, NavLink } from "react-router-dom";
 
 type NavbarComp = {
 	currentUser: string;
@@ -11,6 +13,8 @@ type NavbarComp = {
 
 export default function NavbarComp(props: NavbarComp) {
 	const { currentUser } = props;
+
+	const { user } = useUserContext();
 	return (
 		<Navbar bg='light' className='custom-class'>
 			<Navbar.Brand href='./	'>
@@ -23,23 +27,30 @@ export default function NavbarComp(props: NavbarComp) {
 			</Navbar.Brand>
 			{/* <Navbar.Collapse className='mb-4'> */}
 			<NavbarCollapse className='w-100 d-flex flex-column gap-4 fs-4 mt-2 align-items-center justify-content-start'>
-				<Nav.Item className=' w-100 active-menu p-3'>
+				<NavLink to="/dashboard" className={({ isActive }) => { return (isActive ? "text-secondary active-menu" : "primary-color").concat(" w-100 text-center p-3") }}>
+					{/* <Nav.Item className=' w-100 active-menu p-3'> */}
 					<RxDashboard className='me-2 '></RxDashboard>
-					<Navbar.Text>Dashboard</Navbar.Text>
-				</Nav.Item>
 
-				<Nav.Item className='w-100 p-3'>
+					<Navbar.Text>Dashboard</Navbar.Text>
+
+					{/* </Nav.Item> */}
+				</NavLink>
+
+				<NavLink to="/settings" className={({ isActive }) => { return (isActive ? "text-secondary active-menu" : "primary-color").concat(" w-100 text-center p-3") }}>
 					<IoSettingsOutline className='me-2'></IoSettingsOutline>
 					<Navbar.Text>Settings</Navbar.Text>
-				</Nav.Item>
+				</NavLink>
+
+
 				{/* <Nav.Item>
 					<Navbar.Text>Home page</Navbar.Text>
 				</Nav.Item> */}
 			</NavbarCollapse>
 
 			<Navbar.Text>
-				Signed in as: <a href='#login'>{currentUser}</a>
+				Signed in as: <a href='#login'>{user.username}</a>
 			</Navbar.Text>
+
 
 			<Nav.Item className='mb-2'>
 				<Button variant='danger'>
@@ -55,6 +66,6 @@ export default function NavbarComp(props: NavbarComp) {
 				</Button>
 			</Nav.Item>
 			{/* </Navbar.Collapse> */}
-		</Navbar>
+		</Navbar >
 	);
 }
