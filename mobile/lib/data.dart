@@ -1,6 +1,8 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class Student {
   String name;
-  String group;
   int year;
   String faculty;
   String department;
@@ -10,7 +12,7 @@ class Student {
   List<SemesterGrades> gradesBySemester = [];
   List<Request> requests = [];
 
-  Student(this.name, this.group, this.year, this.faculty, this.department,
+  Student(this.name, this.year, this.faculty, this.department,
       this.email, this.phoneNumber);
 
   List<SemesterGrades> getGradesBySemester() {
@@ -61,11 +63,10 @@ class Grade {
 
 class SemesterGrades {
   int year;
-  int semester;
 
   List<Grade> grades;
 
-  SemesterGrades(this.year, this.semester, this.grades);
+  SemesterGrades(this.year, this.grades);
 }
 
 class Request {
@@ -79,50 +80,76 @@ class Request {
 class CurrentData {
   static Student currentStudent = Student(
       'Alexandru Kullman',
-      '333CA',
       3,
       'Automatica si Calculatoare',
       'CTI',
       'alex.kullman@gmail.com',
       '+40743876451');
 
-  static void addData() {
-    List<SemesterGrades> allGrades = [];
+  static void addData() async {
+    final response = await http
+      .get(Uri.parse('http://localhost:8080/getPersonalDataByCNP/5010518410033'));
 
-    List<Grade> grades = [];
-    grades.add(Grade('Fizica', 8));
-    grades.add(Grade('Analiza matematica', 9));
-    grades.add(Grade('Algebra', 6));
-    grades.add(Grade('Proiectarea algoritmilor', 10));
-    grades.add(Grade('Proiectare logica', 9));
-    grades.add(Grade('Ingineria programelor', 10));
+    Map<String, dynamic> data = jsonDecode(response.body);
+    currentStudent = Student(
+        data['firstName'],
+        data['year'],
+        data['school'],
+        data['department'],
+        data['email'],
+        data['phoneNumber']);
 
-    SemesterGrades semester1 = SemesterGrades(3, 1, grades);
-    allGrades.add(semester1);
+    final response2 = await http.get(Uri.parse('http://localhost:8080/getGradesByCNP/5010518410033'));
 
-    List<Grade> grades2 = [];
-    grades2.add(Grade('Fizica2', 8));
-    grades2.add(Grade('Analiza matematica2', 9));
-    grades2.add(Grade('Algebra2', 6));
-    grades2.add(Grade('Proiectarea algoritmilor2', 10));
-    grades2.add(Grade('Proiectare logica2', 9));
-    grades2.add(Grade('Ingineria programelor2', 10));
+    List<dynamic> grades = jsonDecode(response2.body);
+    Map<String, dynamic> gradeRegister = grades[0];
+    List<dynamic> semesters = gradeRegister['history'];
+    for (Map<String, dynamic> semester in semesters) {
+      Map<String, dynamic> grades = semester['subjects'];
+      List<Grade> gradesList = [];
+      for (var grade in grades.entries) {
+        gradesList.add(Grade(grade.key, grade.value));
+      }
+      currentStudent.gradesBySemester.add(SemesterGrades(semester['year'], gradesList));
+    }
 
-    SemesterGrades semester2 = SemesterGrades(3, 2, grades2);
-    allGrades.add(semester2);
 
-    List<Grade> grades3 = [];
-    grades3.add(Grade('Fizica3', 8));
-    grades3.add(Grade('Analiza matematica3', 9));
-    grades3.add(Grade('Algebra3', 6));
-    grades3.add(Grade('Proiectarea algoritmilor3', 10));
-    grades3.add(Grade('Proiectare logica3', 9));
-    grades3.add(Grade('Ingineria programelor3', 10));
+    // List<SemesterGrades> allGrades = [];
 
-    SemesterGrades semester3 = SemesterGrades(2, 1, grades3);
-    allGrades.add(semester3);
+    // List<Grade> grades = [];
+    // grades.add(Grade('Fizica', 8));
+    // grades.add(Grade('Analiza matematica', 9));
+    // grades.add(Grade('Algebra', 6));
+    // grades.add(Grade('Proiectarea algoritmilor', 10));
+    // grades.add(Grade('Proiectare logica', 9));
+    // grades.add(Grade('Ingineria programelor', 10));
 
-    currentStudent.setGrades(allGrades);
+    // SemesterGrades semester1 = SemesterGrades(3, 1, grades);
+    // allGrades.add(semester1);
+
+    // List<Grade> grades2 = [];
+    // grades2.add(Grade('Fizica2', 8));
+    // grades2.add(Grade('Analiza matematica2', 9));
+    // grades2.add(Grade('Algebra2', 6));
+    // grades2.add(Grade('Proiectarea algoritmilor2', 10));
+    // grades2.add(Grade('Proiectare logica2', 9));
+    // grades2.add(Grade('Ingineria programelor2', 10));
+
+    // SemesterGrades semester2 = SemesterGrades(3, 2, grades2);
+    // allGrades.add(semester2);
+
+    // List<Grade> grades3 = [];
+    // grades3.add(Grade('Fizica3', 8));
+    // grades3.add(Grade('Analiza matematica3', 9));
+    // grades3.add(Grade('Algebra3', 6));
+    // grades3.add(Grade('Proiectarea algoritmilor3', 10));
+    // grades3.add(Grade('Proiectare logica3', 9));
+    // grades3.add(Grade('Ingineria programelor3', 10));
+
+    // SemesterGrades semester3 = SemesterGrades(2, 1, grades3);
+    // allGrades.add(semester3);
+
+    // currentStudent.setGrades(allGrades);
 
     List<Request> requests = [];
     requests.add(Request('Request1', 'some description here', false));
