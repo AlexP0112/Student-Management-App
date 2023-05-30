@@ -6,13 +6,25 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // the root widget
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    setState(() {
+      CurrentData.addData();
+    });
+    super.didChangeDependencies();
+  }
+  @override
   Widget build(BuildContext context) {
-    CurrentData.addData();
     return MaterialApp(
       title: 'Student App',
       theme: ThemeData(
@@ -33,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedViewIndex = 0;
+  int _selectedViewIndex = 3;
   static final List<Widget> _views = ViewProvider.getViews();
 
   void _onItemInNavigationBarPressed(int index) {

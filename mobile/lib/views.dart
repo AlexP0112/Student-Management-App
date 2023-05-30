@@ -40,7 +40,7 @@ class _GradesViewState extends State<GradesView> {
       result.add(Center(
           heightFactor: 1.0,
           child: Text(
-            'Year ${semester.year.toString()}, Semester ${semester.semester.toString()}',
+            'Year ${semester.year.toString()}',
             style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           )));
 
@@ -164,7 +164,7 @@ class ViewProvider {
           widthFactor: 1.0,
           alignment: Alignment.centerLeft,
           child: Text(
-            '   Name:                   ${CurrentData.currentStudent.name}',
+            '   Name:                   ${CurrentData.currentStudent.getName()}',
             style: const TextStyle(fontSize: 22),
           ),
         ),
@@ -186,15 +186,15 @@ class ViewProvider {
             style: const TextStyle(fontSize: 22),
           ),
         ),
-        Align(
-          heightFactor: 2.0,
-          widthFactor: 1.0,
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '   Group:                  ${CurrentData.currentStudent.group}',
-            style: const TextStyle(fontSize: 22),
-          ),
-        ),
+        // Align(
+        //   heightFactor: 2.0,
+        //   widthFactor: 1.0,
+        //   alignment: Alignment.centerLeft,
+        //   child: Text(
+        //     '   Group:                  ${CurrentData.currentStudent.group}',
+        //     style: const TextStyle(fontSize: 22),
+        //   ),
+        // ),
         Align(
           heightFactor: 2.0,
           widthFactor: 1.0,
