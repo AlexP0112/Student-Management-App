@@ -2,10 +2,13 @@
 	--primary-color: rgb(83, 1, 1);
 	--secondary-color: rgb(248, 249, 250);
 	--third-color: rgb(221, 221, 221);
+
 }
 
 body {
 	font-family: "Roboto", sans-serif;
+	width:100vw;
+	height:100vh;
 }
 
 .bg-primary-clr {
@@ -68,6 +71,11 @@ a {
 a:hover{
 	color: var(--primary-color);
 }
+
+.active-page{
+	color: var(--primary-color) !important;
+}
+
 .nav-item {
 	cursor: pointer;
 }

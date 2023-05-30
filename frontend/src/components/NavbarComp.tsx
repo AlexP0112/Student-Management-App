@@ -16,7 +16,7 @@ export default function NavbarComp(props: NavbarComp) {
 
 	const { user } = useUserContext();
 	return (
-		<Navbar bg='light' className='custom-class'>
+		<Navbar bg='light' className='custom-class position-sticky '>
 			<Navbar.Brand href='./	'>
 				<img
 					src={NavbarLogo}

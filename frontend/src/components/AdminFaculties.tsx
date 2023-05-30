@@ -33,6 +33,7 @@ function AdminFaculties() {
             name: "Faculty of Automatic Control and Computer Science",
             departments: [
                 {
+                    id: 1,
                     "name": "Department of Fotbal",
                     "teachers": [
                         "Hagi"
@@ -69,6 +70,7 @@ function AdminFaculties() {
             name: "Inginerie medicala",
             departments: [
                 {
+                    id: 1,
                     "name": "Department of Geanina",
                     "teachers": [
                         "Banel"
@@ -104,6 +106,7 @@ function AdminFaculties() {
             name: "Electronica si telecomunicatii",
             departments: [
                 {
+                    id: 1,
                     "name": "Department of Geanina",
                     "teachers": [
                         "Banel"
@@ -139,6 +142,7 @@ function AdminFaculties() {
             name: "Faculty of Automatic Control and Computer Science",
             departments: [
                 {
+                    id: 1,
                     "name": "Department of Geanina",
                     "teachers": [
                         "Banel"

@@ -21,6 +21,8 @@ import Settings from "./components/Settings";
 import NotFoundPage from "./components/NotFoundPage";
 import AdminSecretariesPage from "./components/AdminSecretaries";
 import AdminFacultiesPage from "./components/AdminFaculties";
+import AdminSubjects from "./components/AdminSubjects";
+import AdminSubjectsPage from "./components/AdminSubjects";
 
 
 function App() {
@@ -73,7 +75,7 @@ function App() {
 			<Route path="/dashboard/users/students" element={user.username == "admin" ? <AdminStudentsPage /> : <SecretaryDashboard />} />
 			<Route path="/dashboard/users/secretaries" element={user.username == "admin" ? <AdminSecretariesPage /> : < NotFoundPage />} />
 			<Route path="/dashboard/university/faculties" element={user.username == "admin" ? <AdminFacultiesPage /> : < NotFoundPage />} />
-
+			<Route path="/dashboard/university/subjects" element={user.username == "admin" ? <AdminSubjectsPage /> : < NotFoundPage />} />
 
 			<Route path='/login' element={<Login />} />
 			<Route path='/settings' element={<Settings />} />

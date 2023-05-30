@@ -18,8 +18,8 @@ const userPageWrapper = (props: UserPageWrapperPropsType) => {
 
 				<Col className='d-flex flex-column'>
 					<Row>
-						<Col>
-							<Breadcrumb className='color-primary fw-bold fs-5'>
+						<Col className="ps-0">
+							<Breadcrumb className='text-secondary fw-bold fs-5'>
 								<CustomBreadcrumb />
 
 							</Breadcrumb>

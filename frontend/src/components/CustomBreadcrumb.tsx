@@ -21,6 +21,7 @@ function CustomBreadcrumb() {
                         linkAs={isLast ? 'span' : Link}
                         linkProps={isLast ? undefined : { to: url }}
                         active={isLast}
+                        className={isLast ? "active-page" : ""}
                     >
                         {path.charAt(0).toUpperCase() + path.slice(1)}
                     </Breadcrumb.Item>

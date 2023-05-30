@@ -28,6 +28,7 @@ export type YearOfStudyType = {
 }
 
 export type DepartmentType = {
+	id: number;
     name: string;
     teachers: string[];
     yearsOfStudy: YearOfStudyType[]
