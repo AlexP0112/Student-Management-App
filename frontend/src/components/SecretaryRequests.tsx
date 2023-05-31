@@ -49,7 +49,7 @@ function SecretaryRequests() {
     return (
 
         <Form className=''>
-
+            <h1>Requests</h1>
             <ListGroup as="ol" numbered>
 
                 {requests.map(request =>

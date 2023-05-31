@@ -105,6 +105,13 @@ a:hover{
 	aspect-ratio: 1/1;
 }
 
+
+.background-login {
+	background-image: url("../img/login-bg.jpg");
+	background-size: cover;
+	backdrop-filter: blur;
+}
+
 @media (min-width: 768px) {
 	.fs-md {
 		font-size: 1.5rem !important;

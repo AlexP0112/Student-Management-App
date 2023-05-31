@@ -11,7 +11,7 @@ import StudentPage from "./components/Student";
 import SecretaryPage from "./components/Secretary";
 import AdminStudents from "./components/AdminStudents";
 import AdminStudentsPage from "./components/AdminStudents";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import SecretaryDashboard from "./components/SecretaryDashboard";
 import Login from "./components/Login";
@@ -63,13 +63,14 @@ function App() {
 	// 	}
 	// }, [user]);
 
+
+
 	return (
 		<Routes>
 			<Route path='/' element={user.username === undefined ? (
 				<LoginPage />
 			) : (
-				(<DashboardRedirect />))
-
+				<Navigate to="/dashboard" replace={true} />)
 			}
 			></Route>
 			<Route path="/dashboard" element={user.username == "admin" ? <AdminDashboard /> : <SecretaryDashboard />} />
@@ -90,8 +91,7 @@ function App() {
 }
 
 function DashboardRedirect() {
-	const navigate = useNavigate();
-	navigate('/dashboard');
+
 	return <></>;
 }
 

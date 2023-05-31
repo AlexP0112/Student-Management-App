@@ -13,26 +13,31 @@ const UserPageWrapper = (props: UserPageWrapperPropsType) => {
 	const { WrappedComponent } = props;
 	const { user } = useUserContext();
 	return (
-		<Container fluid>
-			<Row className='w-100'>
-				<Col md={5} lg={3} xl={2} className='ps-0'>
-					<NavbarComp currentUser={user.username} />
-				</Col>
+		user.username ?
+			<Container fluid>
+				<Row className='w-100'>
+					<Col md={5} lg={3} xl={2} className='ps-0'>
+						<NavbarComp currentUser={user.username} />
+					</Col>
 
-				<Col className='d-flex flex-column'>
-					<Row>
-						<Col className="ps-0">
-							<Breadcrumb className='text-secondary fw-bold fs-5'>
-								<CustomBreadcrumb />
+					<Col className='d-flex flex-column'>
+						<Row>
+							<Col className="ps-0">
+								<Breadcrumb className='text-secondary fw-bold fs-5'>
+									<CustomBreadcrumb />
 
-							</Breadcrumb>
-						</Col>
-					</Row>
+								</Breadcrumb>
+							</Col>
+						</Row>
 
-					<WrappedComponent></WrappedComponent>
-				</Col>
-			</Row>
-		</Container>
+						<WrappedComponent></WrappedComponent>
+					</Col>
+				</Row>
+			</Container>
+			:
+
+			<WrappedComponent />
+
 	);
 };
 
