@@ -1,2 +1,6 @@
-# Proiect IP - Sistem de gestiune a studentilor dintr-o facultate
+This project represents a student management app, some thing that most universities have.
+
+Admins and secretaries should connect via a web agent, and students via a mobile app.
+
+The web part is not connected with the back-end at the moment.
 
