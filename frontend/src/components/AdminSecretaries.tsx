@@ -10,7 +10,7 @@ import {
     Table,
 } from "react-bootstrap";
 import NavbarComp from "./NavbarComp";
-import userPageWrapper from "./UserPageWrapper";
+import UserPageWrapper from "./UserPageWrapper";
 import userDefaultPicture from "../img/user-default-picture.svg";
 import picture from "../img/student.jpg";
 import AddModal from "./ManageEntity";
@@ -156,5 +156,5 @@ function AdminSecretaries() {
 }
 
 const AdminSecretariesPage = () =>
-    userPageWrapper({ WrappedComponent: AdminSecretaries });
+    UserPageWrapper({ WrappedComponent: AdminSecretaries });
 export default AdminSecretariesPage;

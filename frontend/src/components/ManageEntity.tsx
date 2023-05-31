@@ -38,15 +38,12 @@ export default function ManageEntity(props: ManageEntityPropsType) {
 
 	const [filteredData, setFilteredData] = useState(data);
 	const [searchValue, setSearchValue] = useState("");
-	const [newData, setNewData] = useState<DataType>({} as DataType);
 	const [formValues, setFormValues] = useState<FormValuesType>({} as FormValuesType);
 
 	const [studentFormValues, setStudentFormValues] = useState({
 		year: years ? years[0] : "",
 		faculty: faculties ? faculties[0] : ""
 	})
-
-	const [newSubjects, setNewSubjects] = useState<SubjectType[]>([]);
 
 	useEffect(() => {
 		setFilteredData(data);
@@ -62,7 +59,6 @@ export default function ManageEntity(props: ManageEntityPropsType) {
 
 	const handleShow = () => setShowModal(true);
 	const [showModal, setShowModal] = useState(false);
-	const handleClose = () => setShowModal(false);
 
 	useEffect(() => {
 		if (searchValue == "") {
@@ -134,17 +130,6 @@ export default function ManageEntity(props: ManageEntityPropsType) {
 
 	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
-	};
-
-
-	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const { name, value } = e.target;
-		setStudentFormValues((studentFormValues) => ({ ...studentFormValues, [name]: value }));
-	};
-
 
 
 	return (
@@ -165,96 +150,6 @@ export default function ManageEntity(props: ManageEntityPropsType) {
 					/>
 				</Form>
 			</div>
-
-
-
-			{/* <Modal show={showModal} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Add a New {entity.charAt(0).toUpperCase() + entity.slice(1)}</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						{formGroups.map((group) =>
-							group.column ? (
-								<Form.Group key={group.id} className='mb-3' controlId=''>
-									<Row>
-										{group.inputs.map((input) => {
-											const { id, ...formProps } = input;
-											return (
-												<Col key={input.id}>
-													<Form.Label>{input.label}</Form.Label>
-													<Form.Control  {...formProps} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e)} />
-												</Col>
-											);
-										})}
-									</Row>
-								</Form.Group>
-							) : (
-								group.inputs.map((input) => {
-									const { id, ...formProps } = input;
-									return (
-										<Form.Group key={id} className='mb-3' controlId=''>
-											<Form.Label>{input.label}</Form.Label>
-											<Form.Control {...formProps} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e)} />
-										</Form.Group>
-									);
-								})
-							)
-						)}
-
-						{entity === "student" ? (
-							years && faculties ? (
-								<Form.Group className='mb-3' controlId=''>
-									<Row>
-										<Col>
-											<Form.Label>Year</Form.Label>
-											<Form.Select name="year" aria-label='Select year' onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}>
-												{years.map((year) => (
-													// @TODO Add Key for each option
-													<option value={year}>{year}</option>
-												))}
-											</Form.Select>
-										</Col>
-										<Col>
-											<Form.Label>Faculty</Form.Label>
-											<Form.Select name="faculty"
-												onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}
-												aria-label='Select faculty'
-												style={{
-													textOverflow: "ellipsis",
-												}}
-												value={faculties[0]}
-											>
-												{faculties.map((year) => (
-													<option value={year}>{year}</option>
-												))}
-											</Form.Select>
-										</Col>
-									</Row>
-								</Form.Group>
-							) : (
-								<></>
-							)
-						) : (
-							<></>
-						)}
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<Button variant='secondary' onClick={handleClose}>
-						Close
-					</Button>
-					<Button
-						variant='primary'
-						onClick={() => {
-							handleClose();
-							handleAddStudent();
-						}}
-					>
-						Save Changes
-					</Button>
-				</Modal.Footer>
-			</Modal> */}
 
 			<ModalComponent showModal={showModal} formValues={formValues} setFormValues={setFormValues}
 				setShowModal={setShowModal} entity={entity} handleAddStudent={handleAddStudent} formGroups={formGroups}

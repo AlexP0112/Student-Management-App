@@ -23,6 +23,8 @@ import AdminSecretariesPage from "./components/AdminSecretaries";
 import AdminFacultiesPage from "./components/AdminFaculties";
 import AdminSubjects from "./components/AdminSubjects";
 import AdminSubjectsPage from "./components/AdminSubjects";
+import SecretaryRequestsPage from "./components/SecretaryRequests";
+import LoginPage from "./components/Login";
 
 
 function App() {
@@ -30,7 +32,7 @@ function App() {
 	const { user, setUser } = useUserContext();
 
 	useEffect(() => {
-		setUser({ username: "admin" });
+		// setUser({ username: "secretary" });
 	}, [])
 
 	const navigate = useNavigate();
@@ -63,20 +65,19 @@ function App() {
 
 	return (
 		<Routes>
-			<Route path='/' element={user === undefined ? (
-				<HomePage />
+			<Route path='/' element={user.username === undefined ? (
+				<LoginPage />
 			) : (
 				(<DashboardRedirect />))
 
 			}
 			></Route>
 			<Route path="/dashboard" element={user.username == "admin" ? <AdminDashboard /> : <SecretaryDashboard />} />
-
 			<Route path="/dashboard/users/students" element={user.username == "admin" ? <AdminStudentsPage /> : <SecretaryDashboard />} />
 			<Route path="/dashboard/users/secretaries" element={user.username == "admin" ? <AdminSecretariesPage /> : < NotFoundPage />} />
 			<Route path="/dashboard/university/faculties" element={user.username == "admin" ? <AdminFacultiesPage /> : < NotFoundPage />} />
 			<Route path="/dashboard/university/subjects" element={user.username == "admin" ? <AdminSubjectsPage /> : < NotFoundPage />} />
-
+			<Route path="/requests" element={user.username == "secretary" ? <SecretaryRequestsPage /> : <NotFoundPage />} />
 			<Route path='/login' element={<Login />} />
 			<Route path='/settings' element={<Settings />} />
 			<Route path="*" element={<NotFoundPage />} />

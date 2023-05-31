@@ -1,5 +1,5 @@
 import React from 'react'
-import userPageWrapper from './UserPageWrapper';
+import UserPageWrapper from './UserPageWrapper';
 import { Button, Card, CardGroup, Col, Container, Form, ListGroup, Modal, Row } from 'react-bootstrap';
 import CardHeader from 'react-bootstrap/esm/CardHeader';
 import facultyPicture from '../img/upb.jpg';
@@ -187,7 +187,7 @@ function AdminFaculties() {
 }
 
 const AdminFacultiesPage = () =>
-    userPageWrapper({ WrappedComponent: AdminFaculties });
+    UserPageWrapper({ WrappedComponent: AdminFaculties });
 
 export default AdminFacultiesPage;
 

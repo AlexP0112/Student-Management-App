@@ -10,7 +10,7 @@ import {
 	Table,
 } from "react-bootstrap";
 import NavbarComp from "./NavbarComp";
-import userPageWrapper from "./UserPageWrapper";
+import UserPageWrapper from "./UserPageWrapper";
 import userDefaultPicture from "../img/user-default-picture.svg";
 import picture from "../img/student.jpg";
 import ManageEntity from "./ManageEntity";
@@ -29,6 +29,7 @@ function AdminStudents() {
 			img: picture,
 			username: "pordaruandrei",
 			email: "podaru@gmail.com",
+			cnp: "234242323223"
 		},
 		{
 			id: 2,
@@ -38,6 +39,7 @@ function AdminStudents() {
 			faculty: "Automatica si Calculatoare",
 			username: "stanandreea",
 			email: "podaru@gmail.com",
+			cnp: "234242323223"
 		},
 		{
 			id: 3,
@@ -47,6 +49,7 @@ function AdminStudents() {
 			faculty: "Inginerie Medicala",
 			username: "kullmanalexandru",
 			email: "podaru@gmail.com",
+			cnp: "234242323223"
 		},
 		{
 			id: 4,
@@ -56,6 +59,7 @@ function AdminStudents() {
 			faculty: "Electronica, telecomunicatii si tehnologia informatiei",
 			username: "iordachestefan",
 			email: "podaru@gmail.com",
+			cnp: "234242323223"
 		},
 		{
 			id: 5,
@@ -65,6 +69,7 @@ function AdminStudents() {
 			faculty: "Automatica si Calculatoare",
 			username: "manouser",
 			email: "podaru@gmail.com",
+			cnp: "234242323223"
 		},
 	]);
 
@@ -180,5 +185,5 @@ function AdminStudents() {
 }
 
 const AdminStudentsPage = () =>
-	userPageWrapper({ WrappedComponent: AdminStudents });
+	UserPageWrapper({ WrappedComponent: AdminStudents });
 export default AdminStudentsPage;

@@ -1,5 +1,5 @@
 import React from "react";
-import userPageWrapper from "./UserPageWrapper";
+import UserPageWrapper from "./UserPageWrapper";
 
 
 
@@ -7,5 +7,5 @@ function Secretary() {
 	return <div>Secretary</div>;
 }
 
-const SecretaryPage = () => userPageWrapper({ WrappedComponent: Secretary });
+const SecretaryPage = () => UserPageWrapper({ WrappedComponent: Secretary });
 export default SecretaryPage;

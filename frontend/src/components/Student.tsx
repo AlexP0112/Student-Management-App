@@ -12,7 +12,7 @@ import {
 	ToastContainer,
 	Image,
 } from "react-bootstrap";
-import userPageWrapper from "./UserPageWrapper";
+import UserPageWrapper from "./UserPageWrapper";
 import GradesGraph from "../img/grades-graph.svg";
 import { useCountdown } from "../hooks/useCountdown";
 import animations from "../css/animations.module.css";
@@ -226,6 +226,6 @@ function Student() {
 	);
 }
 
-const StudentPage = () => userPageWrapper({ WrappedComponent: Student });
+const StudentPage = () => UserPageWrapper({ WrappedComponent: Student });
 
 export default StudentPage;

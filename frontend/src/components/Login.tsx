@@ -1,7 +1,13 @@
 import React from 'react'
+import UserPageWrapper from './UserPageWrapper';
 
-export default function Login() {
+function Login() {
   return (
     <div>Login</div>
   )
+
+
 }
+
+const LoginPage = () => UserPageWrapper({ WrappedComponent: Login });
+export default LoginPage;

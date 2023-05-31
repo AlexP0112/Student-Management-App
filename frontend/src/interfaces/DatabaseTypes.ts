@@ -1,5 +1,6 @@
 export type StudentType = {
 	id: number;
+	cnp: string;
 	img?: string;
 	lastName: string;
 	firstName: string;
@@ -7,6 +8,7 @@ export type StudentType = {
 	faculty: string;
 	username: string;
 	email: string;
+
 };
 
 export type SecretaryType = {

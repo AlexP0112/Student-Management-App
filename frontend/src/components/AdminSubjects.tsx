@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import userPageWrapper from './UserPageWrapper';
+import UserPageWrapper from './UserPageWrapper';
 import { Container, Row, Col, Form, Card, ListGroup, Button, InputGroup } from 'react-bootstrap';
 import bookImg from "../img/book.jpg"
 import { FaCircle } from 'react-icons/fa';
@@ -275,7 +275,6 @@ function AdminSubjects() {
                                                         <Form.Control min={0} max={10} name='numberOfGroups'
                                                             type='number' value={yearStructure.numberOfGroups}
                                                             onChange={e => setYearStructure({ ...yearStructure, [e.target.name]: e.target.value })}>
-
                                                         </Form.Control>
                                                     </Form.Label>
 
@@ -326,6 +325,6 @@ function AdminSubjects() {
 
 
 const AdminSubjectsPage = () =>
-    userPageWrapper({ WrappedComponent: AdminSubjects });
+    UserPageWrapper({ WrappedComponent: AdminSubjects });
 
 export default AdminSubjectsPage;
