@@ -1,15 +1,14 @@
-This document will describe the current Data Models <-> Microservices Architecture
+-> Backend Service, agregator for all the other services, communicates with the frontend through REST, and with the other services through RPC
 
--> Backend Service, agregator for all the other services, communicates with the frontend
+-> Grades Register Service, keeps students' grades in the form of a history, which describes a academic year
 
--> Login-Service, data models to be decided, used by all the users
+-> Mail Service, used to send request from the students to the secretary
 
--> Mail Service, mail data model, used for communication between students and secretaries
+-> Personal Data Service, handles personal data for every type of user
 
--> Register Service, student info data model, used by secretaries on write and students on read
+-> School Service, handles information regarding the schools from the university
 
--> School Service, school data model, used by the admin on write and secretaries on read
+-> Billing Service, TODO
 
--> Billing Service, data model to be decided, used to pay school taxes
+-> Authentication Service, TODO
 
-This document is prone to change.
